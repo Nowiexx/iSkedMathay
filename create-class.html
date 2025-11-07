@@ -8,75 +8,137 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
  <script src="theme.js" defer></script>
  <style>
-    :root{--main-bg:#f7f3ef;--sidebar-bg:#f2e9df;--text-color:#000;--accent1:#ff5f6d;--accent2:#d82cff;--card-bg:#fff}
-    body{margin:0;font-family:"Poppins",sans-serif;background:var(--main-bg);color:var(--text-color);display:flex;height:100vh;overflow:hidden}
-    .sidebar{width:100px;background:var(--sidebar-bg);display:flex;flex-direction:column;align-items:center;padding-top:20px;box-shadow:2px 0 10px rgba(0,0,0,.1)}
-    .sidebar a{color:var(--accent2);text-decoration:none;font-weight:600;margin:18px 0;text-align:center}
-    .main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px}
-    form{background:var(--card-bg);padding:30px;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,.12);width:100%;max-width:420px;display:flex;flex-direction:column;gap:12px}
-    input{padding:12px;border-radius:8px;border:2px solid #e8e2dd;font-family:inherit}
-    button{padding:12px;border-radius:10px;border:none;background:var(--accent2);color:white;font-weight:600;cursor:pointer}
-    button:disabled{opacity:.6;cursor:not-allowed}
-    .sidebar a:hover {
-       width: 60%;
-    }
-    .sidebar a:hover {
-  color: var(--hover-glow);
-  transform: scale(1.1);
-  text-shadow: 0 0 8px var(--accent1), 0 0 15px var(--accent2);
-}
-/* ✅ Fullscreen Fix para sa mobile */
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
+  :root {
+    --main-bg: #f7f3ef;
+    --sidebar-bg: #f2e9df;
+    --text-color: #000;
+    --accent1: #ff5f6d;
+    --accent2: #d82cff;
+    --card-bg: #fff;
+  }
 
-body {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: var(--main-bg);
-}
+  * {
+    box-sizing: border-box;
+  }
 
-/* Para sakto spacing ng main content */
-.main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ✅ Responsive adjustment para maayos tingnan sa cellphone */
-@media (max-width: 768px) {
   body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: var(--main-bg);
+    color: var(--text-color);
+    display: flex;
+    min-height: 100vh;
+    flex-direction: row;
+  }
+
+  .sidebar {
+    width: 100px;
+    background: var(--sidebar-bg);
+    display: flex;
     flex-direction: column;
-    height: auto;
+    align-items: center;
+    padding-top: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+  }
+
+  .sidebar a {
+    color: var(--accent2);
+    text-decoration: none;
+    font-weight: 600;
+    margin: 18px 0;
+    text-align: center;
+    transition: 0.3s;
+  }
+
+  .sidebar a:hover {
+    transform: scale(1.1);
+    text-shadow: 0 0 8px var(--accent1), 0 0 15px var(--accent2);
   }
 
   .main {
     flex: 1;
-    padding-bottom: 40px; /* para hindi dumikit sa baba */
-  }
-
-  .sidebar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 65px;
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    background: var(--sidebar-bg);
-    box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+    padding: 40px;
   }
 
-  .main {
-    margin-bottom: 65px; /* para hindi matakpan ng sidebar */
+  form {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
   }
-}
 
-  </style>
+  input {
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid #e8e2dd;
+    font-family: inherit;
+    width: 100%;
+  }
+
+  button {
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background: var(--accent2);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  /* ✅ MOBILE RESPONSIVE LAYOUT */
+  @media (max-width: 768px) {
+    body {
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    .sidebar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 65px;
+      flex-direction: row;
+      justify-content: space-around;
+      padding: 0;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+    }
+
+    .sidebar img {
+      display: none;
+    }
+
+    .main {
+      flex: 1;
+      width: 100%;
+      padding: 20px;
+      margin-bottom: 65px; /* para di matakpan ng sidebar */
+    }
+
+    form {
+      width: 100%;
+      max-width: 100%;
+      margin: auto;
+    }
+  }
+</style>
+
 </head>
 <body>
   <div class="sidebar">
@@ -167,7 +229,7 @@ body {
           window.location.href = `class-view.html?code=${encodeURIComponent(code)}`;
         }, 500);
 
-      } catch (err) {
+      } catch (err) { 
         console.error("Create error:", err);
         alert("Failed to create class. Try again.");
         btn.disabled = false;
