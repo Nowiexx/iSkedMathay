@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>iSkedMathay - Home</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+ <script src="theme.js" defer></script>
+  <style>
+    :root {
+      --main-bg: #f7f3ef;
+      --sidebar-bg: #f2e9df;
+      --text-color: #000;
+      --accent1: #ff5f6d;
+      --accent2: #d82cff;
+      --card-bg: #ffffff;
+    }
+    body{margin:0;font-family:"Poppins",sans-serif;background:var(--main-bg);color:var(--text-color);display:flex;height:100vh;overflow:hidden}
+    .sidebar{width:100px;background:var(--sidebar-bg);display:flex;flex-direction:column;align-items:center;padding-top:20px;box-shadow:2px 0 10px rgba(0,0,0,.1)}
+    .sidebar img{width:65px;height:65px;border-radius:50%;background:#fff;padding:5px;margin-bottom:25px}
+    .sidebar a{color:var(--accent2);text-decoration:none;font-weight:600;margin:18px 0;text-align:center}
+    .main{flex:1;padding:40px;overflow-y:auto}
+    .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}
+    .logo{font-size:28px;font-weight:700;background:linear-gradient(to right,var(--accent1),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .buttons{display:flex;gap:15px}
+    .btn{padding:10px 20px;border-radius:8px;font-weight:600;text-decoration:none;color:white;background:var(--accent1)}
+    .btn.join{background:var(--accent2)}
+    .classes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+    .class-card{background:var(--card-bg);border-radius:15px;padding:20px;box-shadow:0 4px 10px rgba(0,0,0,.1);cursor:pointer;transition:.2s}
+    .class-card:hover{transform:translateY(-6px)}
+    .class-title{font-size:20px;font-weight:700;color:var(--accent2)}
+    .class-subject{color:#666;font-size:15px;margin-top:6px}
+    .class-code{margin-top:10px;font-size:13px;color:#999}
+    .logout-btn{margin-top:auto;margin-bottom:24px;background:linear-gradient(to right,var(--accent1),var(--accent2));border:none;color:white;padding:10px;border-radius:8px;cursor:pointer}
+  .sidebar a:hover {
+       width: 60%;
+    }
+    .sidebar a:hover {
+  color: var(--hover-glow);
+  transform: scale(1.1);
+  text-shadow: 0 0 8px var(--accent1), 0 0 15px var(--accent2);
+}
+  /* 📱 Mobile Responsive Styles */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .sidebar {
+    flex-direction: row;
+    width: 100%;
+    height: 70px;
+    justify-content: space-around;
+    padding-top: 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,.1);
+  }
+
+  .sidebar img {
+    display: none; /* optional, pwede mong itago logo */
+  }
+
+  .sidebar a, .logout-btn {
+    font-size: 12px;
+    margin: 0;
+  }
+
+  .logout-btn {
+    padding: 5px 10px;
+    margin: 0;
+  }
+
+  .main {
+    padding: 20px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .logo {
+    font-size: 22px;
+  }
+
+  .buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .classes {
+    grid-template-columns: 1fr;
+  }
+
+  .class-card {
+    padding: 15px;
+    font-size: 14px;
+  }
+}
+/* ✅ Fullscreen Fix para sa mobile */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--main-bg);
+}
+
+/* Para sakto spacing ng main content */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ✅ Responsive adjustment para maayos tingnan sa cellphone */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .main {
+    flex: 1;
+    padding-bottom: 40px; /* para hindi dumikit sa baba */
+  }
+
+  .sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 65px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: var(--sidebar-bg);
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+  }
+
+  .main {
+    margin-bottom: 65px; /* para hindi matakpan ng sidebar */
+  }
+}
+
+  </style>
+
+
+</head>
+<body>
+  <div class="sidebar">
+    <img src="67eb2372-bf44-433b-bd1e-320f92ae8387.jpg" alt="Logo">
+    <a href="index.html"><i class="fas fa-home"></i><br>Home</a>
+    <a href="calendar.html"><i class="fas fa-calendar-alt"></i><br>Calendar</a>
+    <a href="settings.html"><i class="fas fa-cog"></i><br>Settings</a>
+    <button id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+  </div>
+
+  <div class="main">
+    <div class="header">
+      <div class="logo">iSkedMathay</div>
+      <div class="buttons">
+        <a id="createLink" class="btn" href="create-class.html">Create Class</a>
+        <a id="joinLink" class="btn join" href="join-class.html">Join Class</a>
+      </div>
+    </div>
+
+    <h2>Your Classes</h2>
+    <div id="classList" class="classes">
+      <p>Loading your classes...</p>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { firebaseConfig } from "./firebase-config.js";
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    const classList = document.getElementById("classList");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    logoutBtn.addEventListener("click", async () => {
+      await signOut(auth);
+      setTimeout(() => {
+  window.location.href = "login.html";
+}, 150);
+
+    });
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        setTimeout(() => {
+  window.location.href = "login.html";
+}, 150);
+
+        return;
+      }
+
+      try {
+        classList.innerHTML = "<p>Loading your classes...</p>";
+
+        // Fetch created classes
+        const createdSnap = await getDocs(collection(db, "users", user.uid, "classes"));
+        // Fetch joined classes
+        const joinedSnap = await getDocs(collection(db, "users", user.uid, "joinedClasses"));
+
+        const all = [];
+
+        createdSnap.forEach(d => { const data = d.data(); all.push({ ...data, type: "Created" }); });
+        joinedSnap.forEach(d => { const data = d.data(); all.push({ ...data, type: "Joined" }); });
+
+        if (all.length === 0) {
+          classList.innerHTML = "<p>No classes yet. Create or join a class to get started!</p>";
+          return;
+        }
+
+        classList.innerHTML = "";
+        all.forEach(cls => {
+          const card = document.createElement("div");
+          card.className = "class-card";
+          card.innerHTML = `
+            <div class="class-title">${escapeHtml(cls.name)}</div>
+            <div class="class-subject">${escapeHtml(cls.subject)} — ${escapeHtml(cls.section)}</div>
+            <div class="class-code">${cls.type} | Code: ${escapeHtml(cls.code)}</div>
+          `;
+          card.addEventListener("click", () => {
+            // navigate via URL param (no localStorage)
+           setTimeout(() => {
+  window.location.href = `class-view.html?code=${encodeURIComponent(cls.code)}`;
+}, 150);
+
+          });
+          classList.appendChild(card);
+        });
+
+      } catch (err) {
+        console.error("Load classes error:", err);
+        classList.innerHTML = "<p>Failed to load classes. Try refresh.</p>";
+      }
+    });
+
+    // small utility to prevent XSS
+    function escapeHtml(str){ if(!str) return ""; return String(str).replace(/[&<>"']/g, s=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[s])); }
+ 
+ function smoothRedirect(url) {
+  document.body.style.transition = none;
+  document.body.style.opacity = none;
+  setTimeout(() => {
+    window.location.href = url;
+  }, 300);
+}
+
+ 
+ </script>
+
+</body>
+</html>

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Class View | iSkedMathay</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+   <script src="theme.js" defer></script>
+  <style>
+    :root{--main-bg:#f7f3ef;--sidebar-bg:#f2e9df;--text-color:#000;--accent1:#ff5f6d;--accent2:#d82cff;--card-bg:#fff;--input-border:#ddd}
+    body{margin:0;font-family:"Poppins",sans-serif;background:var(--main-bg);color:var(--text-color);display:flex;height:100vh;overflow:hidden}
+    .sidebar{width:100px;background:var(--sidebar-bg);display:flex;flex-direction:column;align-items:center;padding-top:20px;box-shadow:2px 0 10px rgba(0,0,0,.1);z-index:2}
+    .sidebar img{width:65px;height:65px;border-radius:50%;background:#fff;padding:5px;margin-bottom:25px}
+    .sidebar a{color:var(--accent2);text-decoration:none;font-weight:600;margin:18px 0;text-align:center}
+    .main{flex:1;padding:40px;overflow-y:auto;transition:margin-left .4s}
+    .header{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to right,var(--accent1),var(--accent2));color:#fff;padding:18px 30px;border-radius:14px;margin-bottom:20px}
+    .class-info{display:flex;flex-direction:column}
+    .class-title{font-size:24px;font-weight:700}
+    .class-subject{font-size:15px;opacity:.9}
+    .month-nav{display:flex;align-items:center;justify-content:center;gap:15px;margin-bottom:20px}
+    .calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;width:90%;margin:0 auto}
+    .day-name{text-align:center;font-weight:600;color:var(--accent2);font-size:14px}
+    .day-box{background:var(--card-bg);border-radius:12px;padding:8px;min-height:95px;position:relative;box-shadow:0 2px 6px rgba(0,0,0,.08);cursor:pointer}
+    .day-number{position:absolute;top:8px;left:10px;font-size:13px;font-weight:700;color:var(--accent2)}
+    .task-dot{width:10px;height:10px;border-radius:50%;position:absolute;bottom:8px;right:8px;background:linear-gradient(to bottom right,var(--accent1),var(--accent2))}
+    .task-panel{position:fixed;top:0;right:0;height:100vh;width:0;background:var(--card-bg);box-shadow:-4px 0 10px rgba(0,0,0,.25);overflow-y:auto;padding:0;transition:width .4s;display:flex;flex-direction:column;z-index:1000}
+    .task-panel.open{width:420px;padding:25px}
+    input,textarea{width:100%;padding:10px;border-radius:8px;border:2px solid var(--input-border);margin-top:8px;margin-bottom:15px}
+    .task-buttons{display:flex;justify-content:space-between;margin-top:auto}
+    .save-btn{background:var(--accent1);color:#fff;border:none;padding:10px 16px;border-radius:8px;cursor:pointer}
+    .cancel-btn{background:#ccc;border:none;padding:10px 16px;border-radius:8px;cursor:pointer}
+   .sidebar a:hover {
+       width: 60%;
+    }
+    .sidebar a:hover {
+  color: var(--hover-glow);
+  transform: scale(1.1);
+  text-shadow: 0 0 8px var(--accent1), 0 0 15px var(--accent2);
+}
+    /* ====== LEAVE MODAL STYLES ====== */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal {
+  background: #1e1e1e;
+  color: white;
+  padding: 25px 30px;
+  border-radius: 12px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  animation: popIn 0.3s ease;
+}
+
+.modal h3 {
+  margin-top: 0;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.modal p {
+  font-size: 14px;
+  margin-bottom: 20px;
+  opacity: 0.9;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-cancel, .btn-leave {
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-cancel {
+  background: #ccc;
+  color: #222;
+}
+
+.btn-cancel:hover {
+  background: #aaa;
+}
+
+.btn-leave {
+  background: linear-gradient(to right, var(--accent1), var(--accent2));
+  color: white;
+}
+
+.btn-leave:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+/* ✅ Fullscreen Fix para sa mobile */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--main-bg);
+}
+
+/* Para sakto spacing ng main content */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ✅ Responsive adjustment para maayos tingnan sa cellphone */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .main {
+    flex: 1;
+    padding-bottom: 40px; /* para hindi dumikit sa baba */
+  }
+
+  .sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 65px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: var(--sidebar-bg);
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+  }
+
+  .main {
+    margin-bottom: 65px; /* para hindi matakpan ng sidebar */
+  }
+}
+
+
+  </style>
+</head>
+<body>
+  <div class="sidebar" id="sidebar">
+    <img src="67eb2372-bf44-433b-bd1e-320f92ae8387.jpg" alt="Logo">
+    <a href="index.html"><i class="fas fa-home"></i><br>Home</a>
+    <a href="calendar.html"><i class="fas fa-calendar-alt"></i><br>Calendar</a>
+    <a href="settings.html"><i class="fas fa-cog"></i><br>Settings</a>
+  </div>
+
+  <div class="main" id="main">
+    <div class="header">
+      <div class="class-info">
+        <div class="class-title" id="classTitle">Class Name</div>
+        <div class="class-subject" id="classSubject">Subject — Section</div>
+        <div style="font-size:13px;opacity:.9" id="classCodeLabel"></div>
+      </div>
+      <div class="menu">
+        <button id="menuBtn">⋮</button>
+        <div id="dropdownMenu" style="display:none;background:#fff;border-radius:8px;box-shadow:0 4px 10px rgba(0,0,0,.15);position:absolute;right:0;top:40px;min-width:120px">
+          <a href="#" id="leaveClass" style="display:block;padding:12px;color:#333;text-decoration:none;font-weight:600">Leave</a>
+          <a href="#" id="deleteClass" style="display:block;padding:12px;color:#333;text-decoration:none;font-weight:600">Delete (Creator)</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="month-nav">
+      <button id="prev" style="padding:10px 14px;border-radius:8px;border:none;background:linear-gradient(to right,var(--accent1),var(--accent2));color:#fff;cursor:pointer">◀ Prev</button>
+      <div id="month-year" style="font-weight:700;color:var(--accent2)"></div>
+      <button id="next" style="padding:10px 14px;border-radius:8px;border:none;background:linear-gradient(to right,var(--accent1),var(--accent2));color:#fff;cursor:pointer">Next ▶</button>
+    </div>
+
+    <div id="calendar-grid" class="calendar"></div>
+  </div>
+
+  <div id="taskPanel" class="task-panel" aria-hidden="true">
+    <button id="closeTask" style="position:absolute;top:10px;right:15px;border:none;background:none;font-size:22px;cursor:pointer">×</button>
+    <h3 id="selectedDate">Date</h3>
+    <label>Title</label>
+    <input id="taskTitle" placeholder="Enter task title...">
+    <label>Description</label>
+    <textarea id="taskDescription" placeholder="Enter details..."></textarea>
+    <div class="task-buttons" style="margin-top:16px">
+      <button id="saveTask" class="save-btn">Save</button>
+      <button id="cancelTask" class="cancel-btn">Cancel</button>
+    </div>
+    <div id="taskMeta" style="margin-top:12px;font-size:13px;color:#666"></div>
+  </div>
+
+  <!-- LEAVE CLASS MODAL -->
+<div class="modal-overlay" id="leaveModal">
+  <div class="modal">
+    <h3>Leave Class?</h3>
+    <p>Are you sure you want to leave this class? You’ll lose access to its tasks.</p>
+    <div class="modal-buttons">
+      <button class="btn-cancel" id="cancelLeave">Cancel</button>
+      <button class="btn-leave" id="confirmLeave">Leave Class</button>
+    </div>
+  </div>
+</div>
+
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import {
+      getFirestore, doc, getDoc, collection, getDocs, query, where,
+      onSnapshot, addDoc, updateDoc, deleteDoc
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { firebaseConfig } from "./firebase-config.js";
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    // DOM
+    const sidebar = document.getElementById("sidebar");
+    const main = document.getElementById("main");
+    const calendarGrid = document.getElementById("calendar-grid");
+    const monthYear = document.getElementById("month-year");
+    const classTitleEl = document.getElementById("classTitle");
+    const classSubjectEl = document.getElementById("classSubject");
+    const classCodeLabel = document.getElementById("classCodeLabel");
+    const menuBtn = document.getElementById("menuBtn");
+    const dropdownMenu = document.getElementById("dropdownMenu");
+    const leaveModal = document.getElementById("leaveModal");
+    const cancelLeave = document.getElementById("cancelLeave");
+    const confirmLeave = document.getElementById("confirmLeave")
+    const taskPanel = document.getElementById("taskPanel");
+    const closeTask = document.getElementById("closeTask");
+    const saveTaskBtn = document.getElementById("saveTask");
+    const cancelTaskBtn = document.getElementById("cancelTask");
+    const taskTitle = document.getElementById("taskTitle");
+    const taskDescription = document.getElementById("taskDescription");
+    const selectedDateEl = document.getElementById("selectedDate");
+    const taskMeta = document.getElementById("taskMeta");
+    const leaveClassBtn = document.getElementById("leaveClass");
+    const deleteClassBtn = document.getElementById("deleteClass");
+
+
+    // State
+    const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    let today = new Date();
+    let currentMonth = today.getMonth();
+    let currentYear = today.getFullYear();
+    let tasks = {}; // map dateKey -> { id, title, description, createdBy, createdAt }
+    let currentUser = null;
+    let classDoc = null;
+    let classCode = null;
+    let selectedDateKey = null;
+    let unsubscribeTasks = null;
+
+    // read classCode from URL
+    const params = new URLSearchParams(window.location.search);
+    classCode = params.get("code");
+    if (!classCode) {
+      alert("No class code provided. Returning to home.");
+      window.location.href = "index.html";
+    }
+
+    // helpers
+    const ymd = (y,m,d) => `${y}-${m+1}-${d}`;
+
+    function generateCalendar(month, year) {
+      calendarGrid.innerHTML = "";
+      ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].forEach(dn => {
+        const el = document.createElement("div"); el.className = "day-name"; el.textContent = dn; calendarGrid.appendChild(el);
+      });
+
+      const firstDay = new Date(year, month).getDay();
+      const daysInMonth = 32 - new Date(year, month, 32).getDate();
+      monthYear.textContent = `${monthNames[month]} ${year}`;
+
+      for (let i=0;i<firstDay;i++) calendarGrid.appendChild(document.createElement("div"));
+
+      for (let date=1; date<=daysInMonth; date++){
+        const key = ymd(year,month,date);
+        const box = document.createElement("div"); box.className="day-box"; box.setAttribute("data-date", key);
+        const num = document.createElement("div"); num.className="day-number"; num.textContent = date; box.appendChild(num);
+
+        if (tasks[key]) {
+          const dot = document.createElement("div"); dot.className="task-dot"; box.appendChild(dot);
+        }
+
+        box.addEventListener("click", () => {
+          const data = tasks[key] || null;
+          openTaskPanel(key, `${monthNames[month]} ${date}, ${year}`, data);
+        });
+
+        calendarGrid.appendChild(box);
+      }
+    }
+
+    function openTaskPanel(key, displayDate, data = null) {
+      selectedDateKey = key;
+      taskPanel.classList.add("open");
+      taskPanel.setAttribute("aria-hidden", "false");
+      selectedDateEl.textContent = displayDate;
+      if (data) {
+        taskTitle.value = data.title || "";
+        taskDescription.value = data.description || "";
+        taskMeta.textContent = `Posted by: ${data.createdByEmail || data.createdBy || "—"} • ${data.createdAt ? (new Date(data.createdAt.seconds ? data.createdAt.seconds*1000 : data.createdAt)).toLocaleString() : ""}`;
+        saveTaskBtn.dataset.taskId = data.id;
+      } else {
+        taskTitle.value = "";
+        taskDescription.value = "";
+        taskMeta.textContent = "";
+        delete saveTaskBtn.dataset.taskId;
+      }
+
+      // if current user is creator of class -> allow editing
+      const canEdit = currentUser && classDoc && (classDoc.createdBy === currentUser.uid);
+      if (canEdit) {
+        taskTitle.disabled = false; taskDescription.disabled = false; saveTaskBtn.style.display = "inline-block";
+      } else {
+        taskTitle.disabled = true; taskDescription.disabled = true; saveTaskBtn.style.display = "none";
+      }
+    }
+
+    function closeTaskPanel() {
+      taskPanel.classList.remove("open");
+      taskPanel.setAttribute("aria-hidden","true");
+      selectedDateKey = null;
+      delete saveTaskBtn.dataset.taskId;
+    }
+
+    // Load class info and tasks
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) { window.location.href = "login.html"; return; }
+      currentUser = user;
+
+      try {
+        // fetch class doc from global classes/{classCode}
+        const classRef = doc(db, "classes", classCode);
+        const classSnap = await getDoc(classRef);
+        if (!classSnap.exists()) {
+          alert("Class not found. It may have been deleted.");
+          window.location.href = "index.html";
+          return;
+        }
+        classDoc = classSnap.data();
+        classTitleEl.textContent = classDoc.name || "Class";
+        classSubjectEl.textContent = `${classDoc.subject || ""} — ${classDoc.section || ""}`;
+        classCodeLabel.textContent = `Code: ${classDoc.code || classCode}`;
+
+        // show/hide Delete (creator) option
+        if (classDoc.createdBy === currentUser.uid) {
+          deleteClassBtn.style.display = "block";
+        } else {
+          deleteClassBtn.style.display = "none";
+        }
+
+        // realtime listener for class tasks
+        if (unsubscribeTasks) unsubscribeTasks();
+        unsubscribeTasks = onSnapshot(collection(db, "classes", classCode, "tasks"), (snap) => {
+          tasks = {};
+          snap.forEach(s => {
+            const d = s.data();
+            tasks[d.date] = { id: s.id, ...d };
+          });
+          generateCalendar(currentMonth, currentYear);
+        });
+
+      } catch (err) {
+        console.error("Load class error:", err);
+        alert("Failed to load class.");
+      }
+    });
+
+    // Save task (creator only)
+    saveTaskBtn.addEventListener("click", async () => {
+      if (!currentUser) return;
+      if (!classDoc) return;
+      const title = taskTitle.value.trim();
+      const desc = taskDescription.value.trim();
+      if (!title) return alert("Enter a title.");
+
+      saveTaskBtn.disabled = true;
+      try {
+        const taskId = saveTaskBtn.dataset.taskId;
+        const tasksCol = collection(db, "classes", classCode, "tasks");
+        const payload = { date: selectedDateKey, title, description: desc, updatedAt: new Date() };
+
+        if (taskId) {
+          await updateDoc(doc(db, "classes", classCode, "tasks", taskId), payload);
+        } else {
+          payload.createdAt = new Date();
+          payload.createdBy = currentUser.uid;
+          payload.createdByEmail = currentUser.email || "";
+          await addDoc(tasksCol, payload);
+        }
+        closeTaskPanel();
+      } catch (err) {
+        console.error("Save task error:", err);
+        alert("Failed to save task.");
+      }
+      saveTaskBtn.disabled = false;
+    });
+
+    cancelTaskBtn.addEventListener("click", closeTaskPanel);
+    closeTask.addEventListener("click", closeTaskPanel);
+
+    // Prev/Next month
+    document.getElementById("prev").addEventListener("click", () => { currentMonth--; if (currentMonth<0){ currentMonth=11; currentYear--; } generateCalendar(currentMonth,currentYear); });
+    document.getElementById("next").addEventListener("click", () => { currentMonth++; if (currentMonth>11){ currentMonth=0; currentYear++; } generateCalendar(currentMonth,currentYear); });
+
+    // Menu toggle
+    menuBtn.addEventListener("click", () => { dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block"; });
+
+    // Leave class (removes this user's joinedClasses entries, and if creator also removes their users/{uid}/classes entry)
+    // Leave class with modal confirmation
+leaveClassBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  leaveModal.style.display = "flex";
+});
+
+cancelLeave.addEventListener("click", () => {
+  leaveModal.style.display = "none";
+});
+
+confirmLeave.addEventListener("click", async () => {
+  leaveModal.style.display = "none";
+  try {
+    const joinedCol = collection(db, "users", currentUser.uid, "joinedClasses");
+    const q = query(joinedCol, where("code", "==", classCode));
+    const snaps = await getDocs(q);
+    for (const s of snaps.docs) {
+      await deleteDoc(doc(db, "users", currentUser.uid, "joinedClasses", s.id));
+    }
+
+    const ownCol = collection(db, "users", currentUser.uid, "classes");
+    const q2 = query(ownCol, where("code", "==", classCode));
+    const snaps2 = await getDocs(q2);
+    for (const s of snaps2.docs) {
+      await deleteDoc(doc(db, "users", currentUser.uid, "classes", s.id));
+    }
+
+   // optional fade transition + inline confirmation
+console.log(" You have left the class.");
+const msg = document.createElement("div");
+msg.textContent = " You have left the class.";
+msg.style.position = "fixed";
+msg.style.top = "20px";
+msg.style.left = "50%";
+msg.style.transform = "translateX(-50%)";
+msg.style.background = "linear-gradient(to right, var(--accent1), var(--accent2))";
+msg.style.color = "white";
+msg.style.padding = "12px 20px";
+msg.style.borderRadius = "8px";
+msg.style.fontWeight = "600";
+msg.style.zIndex = "9999";
+msg.style.boxShadow = "0 4px 12px rgba(0,0,0,0.3)";
+document.body.appendChild(msg);
+
+setTimeout(() => {
+  msg.style.transition = "opacity 0.5s";
+  msg.style.opacity = "0";
+  setTimeout(() => {
+    msg.remove();
+    window.location.href = "index.html";
+  }, 500);
+}, 1500);
+
+  } catch (err) {
+    console.error("Leave error:", err);
+    alert("Failed to leave. Try again.");
+  }
+});
+
+
+    // initial calendar render
+    generateCalendar(currentMonth, currentYear);
+  </script>
+</body>
+</html>
