@@ -35,6 +35,8 @@
       padding: 15px 40px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       transition: background 0.4s;
+      position: relative;
+      z-index: 10;
     }
 
     .logo {
@@ -76,9 +78,9 @@
     /* Calendar Section */
     .calendar-section {
       background-color: var(--sidebar-bg);
-      margin: 30px auto;
+      margin: 40px auto;
       width: 85%;
-      padding: 30px 0;
+      padding: 30px;
       border-radius: 15px;
       text-align: center;
       box-shadow: 0 8px 18px rgba(0,0,0,0.1);
@@ -90,7 +92,7 @@
       color: var(--card-bg);
       padding: 25px;
       border-radius: 12px;
-      transition: 0.4s;
+      margin-bottom: 20px;
     }
 
     .calendar-header h3 {
@@ -116,7 +118,7 @@
       font-weight: 600;
       padding: 10px 18px;
       margin: 5px;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
       transition: 0.3s;
     }
@@ -126,21 +128,20 @@
     }
 
     .calendar {
-      width: 90%;
-      margin: 20px auto;
+      width: 100%;
       border-collapse: collapse;
+      border-spacing: 0;
     }
 
     .calendar th {
       background-color: var(--accent2);
       color: var(--card-bg);
-      padding: 10px;
+      padding: 12px;
       border: 2px solid var(--accent1);
       font-weight: 600;
     }
 
     .calendar td {
-      width: 80px;
       height: 70px;
       border: 2px solid var(--accent1);
       color: var(--text-color);
@@ -157,122 +158,68 @@
       color: var(--card-bg);
       cursor: pointer;
     }
-    /* ✅ Fullscreen Fix para sa mobile */
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
 
-body {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: var(--main-bg);
-}
+    /* 📱 MOBILE VIEW */
+    @media (max-width: 768px) {
+      body {
+        padding: 0;
+        margin: 0;
+      }
 
-/* Para sakto spacing ng main content */
-.main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
+      header {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: var(--sidebar-bg);
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 60px;
+        box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+      }
 
-/* ✅ Responsive adjustment para maayos tingnan sa cellphone */
-@media (max-width: 768px) {
-  body {
-    flex-direction: column;
-    height: auto;
-  }
+      header .logo {
+        display: none;
+      }
 
-  .main {
-    flex: 1;
-    padding-bottom: 40px; /* para hindi dumikit sa baba */
-  }
+      header nav {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+      }
 
-  .sidebar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 65px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background: var(--sidebar-bg);
-    box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
-  }
+      nav a {
+        font-size: 13px;
+        margin: 0;
+      }
 
-  .main {
-    margin-bottom: 65px; /* para hindi matakpan ng sidebar */
-  }/* 📱 MOBILE VIEW ADJUSTMENTS ONLY */
-@media (max-width: 768px) {
-  /* Move nav bar to bottom */
-  header {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #e6c8f5;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    height: 60px;
-    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
-    z-index: 999;
-  }
+      .calendar-section {
+        width: 90%;
+        margin: 80px auto 90px auto;
+        padding: 15px;
+        border-radius: 15px;
+      }
 
-  header img {
-    display: none; /* hide logo sa baba para di siksik */
-  }
+      .calendar-header h1 {
+        font-size: 26px;
+      }
 
-  header nav {
-    display: flex;
-    gap: 25px;
-  }
+      .calendar th,
+      .calendar td {
+        font-size: 11px;
+        padding: 5px;
+      }
 
-  header nav a {
-    font-size: 13px;
-    font-weight: 600;
-    color: #7a1ea1;
-    text-decoration: none;
-  }
+      .calendar td {
+        height: 55px;
+      }
 
-  /* Give space para di matakpan ng bottom nav */
-  main {
-    padding-bottom: 80px;
-  }
-
-  /* Make calendar fit better on small screens */
-  .calendar {
-    width: 100%;
-    margin: 0 auto;
-    padding: 10px;
-  }
-
-  .calendar table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  .calendar th,
-  .calendar td {
-    font-size: 12px;
-    padding: 6px;
-  }
-
-  .month-header {
-    font-size: 20px;
-  }
-
-  .prev-btn,
-  .next-btn {
-    font-size: 12px;
-    padding: 6px 12px;
-  }
-}
-}
-
+      .month-nav button {
+        padding: 8px 12px;
+        font-size: 13px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -286,14 +233,10 @@ body {
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // Redirect to login if not logged in
     onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        window.location.href = "login.html";
-      }
+      if (!user) window.location.href = "login.html";
     });
 
-    // Logout button support (optional)
     window.logout = async function() {
       await signOut(auth);
       window.location.href = "login.html";
@@ -308,7 +251,7 @@ body {
     </div>
     <nav>
       <a href="index.html">Home</a>
-      <a href="aboutus.html">About Us</a>
+      <a href="aboutus.html">About</a>
       <a href="help.html">Help</a>
       <a href="#" onclick="logout()">Logout</a>
     </nav>
@@ -402,15 +345,6 @@ body {
     });
 
     generateCalendar(currentMonth, currentYear);
-    function smoothRedirect(url) {
-  document.body.style.transition = none;
-  document.body.style.opacity = none;
-  setTimeout(() => {
-    window.location.href = url;
-  }, 300);
-}
-
   </script>
-
 </body>
 </html>
