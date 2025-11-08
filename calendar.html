@@ -205,7 +205,72 @@ body {
 
   .main {
     margin-bottom: 65px; /* para hindi matakpan ng sidebar */
+  }/* 📱 MOBILE VIEW ADJUSTMENTS ONLY */
+@media (max-width: 768px) {
+  /* Move nav bar to bottom */
+  header {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #e6c8f5;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 60px;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 999;
   }
+
+  header img {
+    display: none; /* hide logo sa baba para di siksik */
+  }
+
+  header nav {
+    display: flex;
+    gap: 25px;
+  }
+
+  header nav a {
+    font-size: 13px;
+    font-weight: 600;
+    color: #7a1ea1;
+    text-decoration: none;
+  }
+
+  /* Give space para di matakpan ng bottom nav */
+  main {
+    padding-bottom: 80px;
+  }
+
+  /* Make calendar fit better on small screens */
+  .calendar {
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+  }
+
+  .calendar table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .calendar th,
+  .calendar td {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  .month-header {
+    font-size: 20px;
+  }
+
+  .prev-btn,
+  .next-btn {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
 }
 
   </style>
