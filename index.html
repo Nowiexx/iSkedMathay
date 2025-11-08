@@ -8,31 +8,30 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
  <script src="theme.js" defer></script>
   <style>
-    :root {
-      --main-bg: #f7f3ef;
-      --sidebar-bg: #f2e9df;
-      --text-color: #000;
-      --accent1: #ff5f6d;
-      --accent2: #d82cff;
-      --card-bg: #ffffff;
-    }
-    body{margin:0;font-family:"Poppins",sans-serif;background:var(--main-bg);color:var(--text-color);display:flex;height:100vh;overflow:hidden}
-    .sidebar{width:100px;background:var(--sidebar-bg);display:flex;flex-direction:column;align-items:center;padding-top:20px;box-shadow:2px 0 10px rgba(0,0,0,.1)}
-    .sidebar img{width:65px;height:65px;border-radius:50%;background:#fff;padding:5px;margin-bottom:25px}
-    .sidebar a{color:var(--accent2);text-decoration:none;font-weight:600;margin:18px 0;text-align:center}
-    .main{flex:1;padding:40px;overflow-y:auto}
-    .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}
-    .logo{font-size:28px;font-weight:700;background:linear-gradient(to right,var(--accent1),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    .buttons{display:flex;gap:15px}
-    .btn{padding:10px 20px;border-radius:8px;font-weight:600;text-decoration:none;color:white;background:var(--accent1)}
-    .btn.join{background:var(--accent2)}
-    .classes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
-    .class-card{background:var(--card-bg);border-radius:15px;padding:20px;box-shadow:0 4px 10px rgba(0,0,0,.1);cursor:pointer;transition:.2s}
-    .class-card:hover{transform:translateY(-6px)}
-    .class-title{font-size:20px;font-weight:700;color:var(--accent2)}
-    .class-subject{color:#666;font-size:15px;margin-top:6px}
-    .class-code{margin-top:10px;font-size:13px;color:#999}
-    .logout-btn{margin-top:auto;margin-bottom:24px;background:linear-gradient(to right,var(--accent1),var(--accent2));border:none;color:white;padding:10px;border-radius:8px;cursor:pointer}
+:root{--main-bg:#f7f3ef;--sidebar-bg:#f2e9df;--text-color:#000;--accent1:#ff5f6d;--accent2:#d82cff;--card-bg:#fff;}
+body{margin:0;font-family:"Poppins",sans-serif;background:var(--main-bg);color:var(--text-color);display:flex;min-height:100vh;}
+
+/* ===== Sidebar (Desktop) ===== */
+.sidebar{width:100px;position:fixed;top:0;left:0;height:100%;background:var(--sidebar-bg);display:flex;flex-direction:column;align-items:center;padding-top:20px;box-shadow:2px 0 10px rgba(0,0,0,.1);z-index:10;}
+.sidebar img{width:65px;height:65px;border-radius:50%;background:#fff;padding:5px;margin-bottom:25px;}
+.sidebar a{color:var(--accent2);text-decoration:none;font-weight:600;margin:18px 0;text-align:center;transition:.3s;}
+.sidebar a:hover{transform:scale(1.1);color:var(--accent1);text-shadow:0 0 8px var(--accent1),0 0 15px var(--accent2);}
+.logout-btn{margin-top:auto;margin-bottom:24px;background:linear-gradient(to right,var(--accent1),var(--accent2));border:none;color:#fff;padding:10px;border-radius:8px;cursor:pointer;}
+
+/* ===== Main Content ===== */
+.main{flex:1;margin-left:100px;padding:40px;overflow-y:auto;}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;}
+.logo{font-size:28px;font-weight:700;background:linear-gradient(to right,var(--accent1),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.buttons{display:flex;gap:15px;}
+.btn{padding:10px 20px;border-radius:8px;font-weight:600;text-decoration:none;color:#fff;background:var(--accent1);transition:.3s;}
+.btn.join{background:var(--accent2);}
+.btn:hover{opacity:.85;transform:scale(1.05);}
+.classes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;}
+.class-card{background:var(--card-bg);border-radius:15px;padding:20px;box-shadow:0 4px 10px rgba(0,0,0,.1);cursor:pointer;transition:.2s;}
+.class-card:hover{transform:translateY(-6px);}
+.class-title{font-size:20px;font-weight:700;color:var(--accent2);}
+.class-subject{color:#666;font-size:15px;margin-top:6px;}
+.class-code{margin-top:10px;font-size:13px;color:#999;}
   .sidebar a:hover {
        width: 60%;
     }
