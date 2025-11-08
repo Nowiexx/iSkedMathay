@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>iSkedMathay - Calendar</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet" />
   <script src="theme.js" defer></script>
-
   <style>
     :root {
       --main-bg: #f7f3ef;
@@ -23,20 +22,19 @@
       color: var(--text-color);
       margin: 0;
       padding: 0;
-      transition: background 0.4s, color 0.4s;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* Header */
+    /* ===== Desktop Header ===== */
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       background-color: var(--sidebar-bg);
       padding: 15px 40px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      transition: background 0.4s;
-      position: relative;
-      z-index: 10;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     .logo {
@@ -52,7 +50,7 @@
       margin-right: 10px;
       background-color: var(--card-bg);
       padding: 3px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     }
 
     .brand {
@@ -75,7 +73,7 @@
       color: var(--accent1);
     }
 
-    /* Calendar Section */
+    /* ===== Calendar Section ===== */
     .calendar-section {
       background-color: var(--sidebar-bg);
       margin: 40px auto;
@@ -83,8 +81,8 @@
       padding: 30px;
       border-radius: 15px;
       text-align: center;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.1);
-      transition: background 0.4s, color 0.4s;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+      flex: 1;
     }
 
     .calendar-header {
@@ -130,7 +128,6 @@
     .calendar {
       width: 100%;
       border-collapse: collapse;
-      border-spacing: 0;
     }
 
     .calendar th {
@@ -144,13 +141,11 @@
     .calendar td {
       height: 70px;
       border: 2px solid var(--accent1);
-      color: var(--text-color);
-      font-weight: 600;
       text-align: right;
       padding: 10px;
       background-color: var(--card-bg);
-      border-radius: 8px;
-      transition: background 0.3s, color 0.3s;
+      transition: background 0.3s;
+      border-radius: 6px;
     }
 
     .calendar td:hover {
@@ -159,24 +154,17 @@
       cursor: pointer;
     }
 
-    /* 📱 MOBILE VIEW */
+    /* ===== Mobile View ===== */
     @media (max-width: 768px) {
-      body {
-        padding: 0;
-        margin: 0;
-      }
-
       header {
         position: fixed;
         bottom: 0;
         left: 0;
         width: 100%;
         background: var(--sidebar-bg);
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
         height: 60px;
-        box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+        justify-content: center;
       }
 
       header .logo {
@@ -184,29 +172,35 @@
       }
 
       header nav {
-        width: 100%;
         display: flex;
-        justify-content: space-around;
+        justify-content: center;
+        width: 100%;
       }
 
-      nav a {
-        font-size: 13px;
+      header nav a {
+        font-size: 15px;
         margin: 0;
+        font-weight: 700;
+      }
+
+      body {
+        overflow: hidden;
       }
 
       .calendar-section {
-        width: 90%;
-        margin: 80px auto 90px auto;
+        width: 92%;
+        margin: 10px auto 80px;
         padding: 15px;
-        border-radius: 15px;
+        border-radius: 12px;
+        height: calc(100vh - 120px);
+        overflow-y: auto;
       }
 
       .calendar-header h1 {
-        font-size: 26px;
+        font-size: 24px;
       }
 
-      .calendar th,
-      .calendar td {
+      .calendar th, .calendar td {
         font-size: 11px;
         padding: 5px;
       }
@@ -216,52 +210,28 @@
       }
 
       .month-nav button {
-        padding: 8px 12px;
-        font-size: 13px;
+        padding: 6px 12px;
+        font-size: 12px;
       }
     }
   </style>
 </head>
+
 <body>
-
-  <!-- ✅ Firebase Auth Protection -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import { firebaseConfig } from "./firebase-config.js";
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    onAuthStateChanged(auth, (user) => {
-      if (!user) window.location.href = "login.html";
-    });
-
-    window.logout = async function() {
-      await signOut(auth);
-      window.location.href = "login.html";
-    };
-  </script>
-
-  <!-- Header -->
   <header>
     <div class="logo">
-      <img src="67eb2372-bf44-433b-bd1e-320f92ae8387.jpg" alt="Logo" class="skull-logo">
+      <img src="67eb2372-bf44-433b-bd1e-320f92ae8387.jpg" alt="Logo" class="skull-logo" />
       <span class="brand">iSkedMathay</span>
     </div>
     <nav>
       <a href="index.html">Home</a>
-      <a href="aboutus.html">About</a>
-      <a href="help.html">Help</a>
-      <a href="#" onclick="logout()">Logout</a>
     </nav>
   </header>
 
-  <!-- Calendar Section -->
   <section class="calendar-section">
     <div class="calendar-header">
       <h3>Activities in</h3>
-      <h1 id="month-year">OCTOBER 2025</h1>
+      <h1 id="month-year">NOVEMBER 2025</h1>
     </div>
 
     <div class="month-nav">
@@ -290,33 +260,28 @@
       "January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"
     ];
-
     let today = new Date();
     let currentMonth = today.getMonth();
     let currentYear = today.getFullYear();
-
     const monthYear = document.getElementById("month-year");
     const calendarBody = document.getElementById("calendar-body");
-    const prevBtn = document.getElementById("prev");
-    const nextBtn = document.getElementById("next");
 
     function generateCalendar(month, year) {
       calendarBody.innerHTML = "";
-      let firstDay = new Date(year, month).getDay();
-      let daysInMonth = 32 - new Date(year, month, 32).getDate();
+      const firstDay = new Date(year, month).getDay();
+      const daysInMonth = 32 - new Date(year, month, 32).getDate();
       monthYear.textContent = `${monthNames[month].toUpperCase()} ${year}`;
-
       let date = 1;
+
       for (let i = 0; i < 6; i++) {
         let row = document.createElement("tr");
         for (let j = 0; j < 7; j++) {
+          let cell = document.createElement("td");
           if (i === 0 && j < firstDay) {
-            let cell = document.createElement("td");
             row.appendChild(cell);
           } else if (date > daysInMonth) {
             break;
           } else {
-            let cell = document.createElement("td");
             cell.textContent = date;
             row.appendChild(cell);
             date++;
@@ -326,23 +291,23 @@
       }
     }
 
-    prevBtn.addEventListener("click", () => {
+    document.getElementById("prev").onclick = () => {
       currentMonth--;
       if (currentMonth < 0) {
         currentMonth = 11;
         currentYear--;
       }
       generateCalendar(currentMonth, currentYear);
-    });
+    };
 
-    nextBtn.addEventListener("click", () => {
+    document.getElementById("next").onclick = () => {
       currentMonth++;
       if (currentMonth > 11) {
         currentMonth = 0;
         currentYear++;
       }
       generateCalendar(currentMonth, currentYear);
-    });
+    };
 
     generateCalendar(currentMonth, currentYear);
   </script>
