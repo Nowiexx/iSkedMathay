@@ -1,245 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>iSkedMathay - Calendar</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar | iSkedMathay</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="theme.css">
   <script src="theme.js" defer></script>
   <style>
     :root {
       --main-bg: #f7f3ef;
-      --sidebar-bg: #f2e9df;
       --text-color: #000;
       --accent1: #ff5f6d;
       --accent2: #d82cff;
-      --card-bg: #ffffff;
+      --card-bg: #fff;
     }
 
-    body {
-      font-family: "Poppins", sans-serif;
-      background-color: var(--main-bg);
-      color: var(--text-color);
+      body {
       margin: 0;
-      padding: 0;
-      min-height: 100vh;
+      font-family: "Poppins", sans-serif;
+      background: var(--main-bg);
+      color: var(--text-color);
       display: flex;
       flex-direction: column;
-    }
-
-    /* ===== Desktop Header ===== */
-    header {
-      display: flex;
-      justify-content: space-between;
       align-items: center;
-      background-color: var(--sidebar-bg);
-      padding: 15px 40px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    .logo {
-      display: flex;
-      align-items: center;
-    }
 
-    .skull-logo {
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-right: 10px;
-      background-color: var(--card-bg);
-      padding: 3px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    }
-
-    .brand {
-      font-weight: 700;
-      font-size: 24px;
-      background: linear-gradient(to right, var(--accent1), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    nav a {
-      text-decoration: none;
-      color: var(--accent2);
-      font-weight: 700;
-      margin-left: 25px;
-      transition: 0.3s;
-    }
-
-    nav a:hover {
-      color: var(--accent1);
-    }
-
-    /* ===== Calendar Section ===== */
-    .calendar-section {
-      background-color: var(--sidebar-bg);
+    /* === Calendar Container === */
+    .container {
+      background: var(--card-bg);
+      border-radius: 25px;
       margin: 40px auto;
-      width: 85%;
       padding: 30px;
-      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      width: 95%;
+      max-width: 1200px;
       text-align: center;
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
-      flex: 1;
     }
 
-    .calendar-header {
+    /* === Header === */
+    .header {
       background: linear-gradient(to right, var(--accent1), var(--accent2));
-      color: var(--card-bg);
+      border-radius: 18px;
+      color: white;
       padding: 25px;
-      border-radius: 12px;
       margin-bottom: 20px;
     }
 
-    .calendar-header h3 {
-      margin: 0;
+    .header h2 {
       font-size: 18px;
+      margin: 0;
       font-weight: 600;
     }
 
-    .calendar-header h1 {
-      margin: 5px 0 0;
-      font-size: 36px;
-      font-weight: 700;
+    .header h1 {
+      margin: 8px 0 0;
+      font-size: 30px;
+      font-weight: 800;
     }
 
-    .month-nav {
+    /* === Month Buttons === */
+    .month-navigation {
       margin: 20px 0;
     }
 
-    .month-nav button {
-      background-color: var(--accent1);
+    .month-navigation button {
+      background: linear-gradient(to right, var(--accent1), var(--accent2));
       border: none;
-      color: var(--card-bg);
-      font-weight: 600;
-      padding: 10px 18px;
-      margin: 5px;
-      border-radius: 8px;
+      color: #fff;
+      padding: 8px 18px;
+      margin: 0 10px;
+      border-radius: 10px;
       cursor: pointer;
-      transition: 0.3s;
+      font-weight: 600;
+      transition: transform 0.2s, opacity 0.2s;
     }
 
-    .month-nav button:hover {
-      background-color: var(--accent2);
+    .month-navigation button:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
     }
 
-    .calendar {
+    /* === Calendar Table === */
+    table {
       width: 100%;
       border-collapse: collapse;
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--card-bg);
     }
 
-    .calendar th {
-      background-color: var(--accent2);
-      color: var(--card-bg);
-      padding: 12px;
-      border: 2px solid var(--accent1);
+    th {
+      background: var(--accent2);
+      color: white;
+      padding: 10px 0;
       font-weight: 600;
     }
 
-    .calendar td {
-      height: 70px;
-      border: 2px solid var(--accent1);
+    td {
+      border: 1px solid rgba(0,0,0,0.1);
+      height: 90px;
       text-align: right;
-      padding: 10px;
-      background-color: var(--card-bg);
-      transition: background 0.3s;
-      border-radius: 6px;
+      padding: 8px;
+      vertical-align: top;
+      transition: background 0.2s ease;
     }
 
-    .calendar td:hover {
-      background-color: var(--accent1);
-      color: var(--card-bg);
+    td:hover {
+      background: rgba(0,0,0,0.05);
       cursor: pointer;
     }
 
-    /* ===== Mobile View ===== */
+    /* === Bottom Navigation === */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 65px;
+      background: var(--sidebar-bg, var(--main-bg));
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .bottom-nav a {
+      color: var(--accent2);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 0.2s;
+    }
+
+    .bottom-nav a i {
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .bottom-nav a:hover {
+      transform: scale(1.1);
+      color: var(--accent1);
+      text-shadow: 0 0 6px var(--accent1), 0 0 10px var(--accent2);
+    }
+
+    /* === Responsive (Mobile) === */
     @media (max-width: 768px) {
-      header {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background: var(--sidebar-bg);
-        height: 60px;
-        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
-        justify-content: center;
-      }
-
-      header .logo {
-        display: none;
-      }
-
-      header nav {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-      }
-
-      header nav a {
-        font-size: 15px;
-        margin: 0;
-        font-weight: 700;
-      }
-
       body {
-        overflow: hidden;
+        padding-bottom: 65px; /* para di matakpan ng nav */
       }
 
-      .calendar-section {
-        width: 92%;
-        margin: 10px auto 80px;
-        padding: 15px;
-        border-radius: 12px;
-        height: calc(100vh - 120px);
-        overflow-y: auto;
+      .container {
+        padding: 20px;
+        margin: 10px;
+        border-radius: 25px;
       }
 
-      .calendar-header h1 {
-        font-size: 24px;
+      .header {
+        padding: 20px;
+        border-radius: 25px;
       }
 
-      .calendar th, .calendar td {
-        font-size: 11px;
-        padding: 5px;
+      .header h1 {
+        font-size: 22px;
       }
 
-      .calendar td {
-        height: 55px;
-      }
-
-      .month-nav button {
-        padding: 6px 12px;
+      td {
+        height: 60px;
         font-size: 12px;
       }
-    }
+
+      table {
+        border-radius: 25px;
+      }
+     html, body {
+    height: 100%;
+    overflow: hidden; /* ✅ no scroll sa mobile */
+  }
+    .calendar-container {
+    height: calc(100vh - 80px); /* para sakto sa screen */
+    overflow: hidden;
+  }
+}
   </style>
 </head>
 
 <body>
-  <header>
-    <div class="logo">
-      <img src="67eb2372-bf44-433b-bd1e-320f92ae8387.jpg" alt="Logo" class="skull-logo" />
-      <span class="brand">iSkedMathay</span>
-    </div>
-    <nav>
-      <a href="index.html">Home</a>
-    </nav>
-  </header>
-
-  <section class="calendar-section">
-    <div class="calendar-header">
-      <h3>Activities in</h3>
-      <h1 id="month-year">NOVEMBER 2025</h1>
+  <div class="container">
+    <div class="header">
+      <h2>Activities in</h2>
+      <h1 id="monthYear">November 2025</h1>
     </div>
 
-    <div class="month-nav">
-      <button id="prev">◀ Prev</button>
-      <button id="next">Next ▶</button>
+    <div class="month-navigation">
+      <button id="prevMonth"><i class="fa-solid fa-chevron-left"></i> Prev</button>
+      <button id="nextMonth">Next <i class="fa-solid fa-chevron-right"></i></button>
     </div>
 
-    <table class="calendar">
+    <table id="calendar">
       <thead>
         <tr>
           <th>SUN</th>
@@ -251,65 +216,80 @@
           <th>SAT</th>
         </tr>
       </thead>
-      <tbody id="calendar-body"></tbody>
+      <tbody>
+        <!-- Calendar populated by JS -->
+      </tbody>
     </table>
-  </section>
+  </div>
+
+  <!-- ✅ Bottom Nav -->
+  <div class="bottom-nav">
+    <a href="index.html">
+      <i class="fa-solid fa-house"></i>
+      <span>Home</span>
+    </a>
+  </div>
 
   <script>
-    const monthNames = [
-      "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
-    ];
+    // Calendar logic
+    const monthYear = document.getElementById("monthYear");
+    const calendarBody = document.querySelector("#calendar tbody");
+    const prevBtn = document.getElementById("prevMonth");
+    const nextBtn = document.getElementById("nextMonth");
+
     let today = new Date();
     let currentMonth = today.getMonth();
     let currentYear = today.getFullYear();
-    const monthYear = document.getElementById("month-year");
-    const calendarBody = document.getElementById("calendar-body");
 
-    function generateCalendar(month, year) {
-      calendarBody.innerHTML = "";
+    const months = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    function renderCalendar(month, year) {
+      monthYear.textContent = `${months[month]} ${year}`;
       const firstDay = new Date(year, month).getDay();
       const daysInMonth = 32 - new Date(year, month, 32).getDate();
-      monthYear.textContent = `${monthNames[month].toUpperCase()} ${year}`;
+      calendarBody.innerHTML = "";
       let date = 1;
 
       for (let i = 0; i < 6; i++) {
-        let row = document.createElement("tr");
+        const row = document.createElement("tr");
         for (let j = 0; j < 7; j++) {
-          let cell = document.createElement("td");
+          const cell = document.createElement("td");
           if (i === 0 && j < firstDay) {
-            row.appendChild(cell);
+            cell.innerHTML = "";
           } else if (date > daysInMonth) {
             break;
           } else {
-            cell.textContent = date;
-            row.appendChild(cell);
+            cell.innerHTML = date;
             date++;
           }
+          row.appendChild(cell);
         }
         calendarBody.appendChild(row);
       }
     }
 
-    document.getElementById("prev").onclick = () => {
+    prevBtn.addEventListener("click", () => {
       currentMonth--;
       if (currentMonth < 0) {
         currentMonth = 11;
         currentYear--;
       }
-      generateCalendar(currentMonth, currentYear);
-    };
+      renderCalendar(currentMonth, currentYear);
+    });
 
-    document.getElementById("next").onclick = () => {
+    nextBtn.addEventListener("click", () => {
       currentMonth++;
       if (currentMonth > 11) {
         currentMonth = 0;
         currentYear++;
       }
-      generateCalendar(currentMonth, currentYear);
-    };
+      renderCalendar(currentMonth, currentYear);
+    });
 
-    generateCalendar(currentMonth, currentYear);
+    renderCalendar(currentMonth, currentYear);
   </script>
 </body>
 </html>
