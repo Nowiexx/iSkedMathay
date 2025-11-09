@@ -128,6 +128,22 @@
 .cancel-btn:hover {
   background: #ccc;
 }
+.menuBtn {
+  background: var(--accent1);
+  border: none;
+  border-radius: 10px;
+  padding: 6px 12px;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.menuBtn:hover {
+  background: var(--accent2);
+  transform: scale(1.05);
+}
+
   
 
     /* ===== MAIN CONTENT ===== */
@@ -343,7 +359,10 @@
         <div style="font-size:13px;opacity:.9" id="classCodeLabel"></div>
       </div>
       <div class="menu">
-        <button id="menuBtn">⋮</button>
+       <button id="menuBtn" class="menuBtn">
+  <i class="fa-solid fa-ellipsis-vertical"></i>
+</button>
+
         <div id="dropdownMenu" style="display:none;background:#fff;border-radius:8px;box-shadow:0 4px 10px rgba(0,0,0,.15);position:absolute;right:0;top:40px;min-width:120px">
           <a href="#" id="leaveClass" style="display:block;padding:12px;color:#333;text-decoration:none;font-weight:600">Leave</a>
           <a href="#" id="deleteClass" style="display:block;padding:12px;color:#333;text-decoration:none;font-weight:600">Delete (Creator)</a>
