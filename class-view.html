@@ -6,8 +6,9 @@
   <title>Class View | iSkedMathay</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
-   <script src="theme.js" defer></script>
-   <style>
+  <script src="theme.js" defer></script>
+
+  <style>
     :root {
       --main-bg: #f7f3ef;
       --sidebar-bg: #f2e9df;
@@ -59,92 +60,87 @@
       text-shadow: 0 0 8px var(--accent1), 0 0 15px var(--accent2);
     }
 
-    .leave-modal {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(6px);
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-  animation: fadeIn 0.3s ease;
-}
+    /* ===== Dropdown/menu button (professional) ===== */
+    .menu-wrap { position: relative; display:inline-block; }
+    .menuBtn {
+      background: linear-gradient(to right, var(--accent1), var(--accent1));
+      border: none;
+      border-radius: 12px;
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: 0.3s;
+        }
+    .menuBtn:hover { ttransform: scale(1.1);
+  box-shadow: 0 0 10px var(--accent2);}
+    .menuBtn .dot { width:6px;height:6px;background:var(--accent2);border-radius:50%;display:block;box-shadow:0 0 0 2px rgba(216,44,255,0.08); }
+    .menuBtn .dot + .dot { margin-left:6px; }
+    .menuBtn .dots { display:flex; gap:6px; align-items:center; }
+    .menu-btn span {
+      width: 6px;
+      height: 6px;
+      background: #fff;
+      border-radius: 50%;
+      display: block;
+    }
+    #dropdownMenu {
+      display: none;
+      position: absolute;
+      top: 50px;
+      right: 0;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.15);
+      padding: 6px 0;
+      z-index: 60;
+      min-width: 180px;
+      transform-origin: top right;
+    }
+    #dropdownMenu.show { display:block; animation: popIn .14s ease; }
+    #dropdownMenu a {
+      display:block;
+      padding:12px 16px;
+      color:#222;
+      text-decoration:none;
+      font-weight:600;
+      transition: background .12s;
+      border-radius:8px;
+    }
+    #dropdownMenu a:hover { background: rgba(0,0,0,0.04); }
 
-.leave-modal-content {
-  background: var(--card-bg);
-  padding: 30px;
-  border-radius: 16px;
-  max-width: 360px;
-  width: 90%;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  animation: popIn 0.35s ease;
-}
+    /* ===== LEAVE / DELETE MODALS with blur ===== */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      animation: fadeIn .18s ease;
+    }
+    .overlay.show { display:flex; }
 
-.leave-modal-content h2 {
-  margin: 0 0 10px;
-  color: var(--accent2);
-  font-size: 22px;
-}
-
-.leave-modal-content p {
-  color: #555;
-  font-size: 14px;
-  margin-bottom: 25px;
-}
-
-.leave-buttons {
-  display: flex;
-  justify-content: space-around;
-}
-
-.leave-btn {
-  background: linear-gradient(to right, var(--accent1), var(--accent2));
-  border: none;
-  color: white;
-  padding: 10px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.leave-btn:hover {
-  opacity: 0.9;
-  transform: scale(1.05);
-}
-
-.cancel-btn {
-  background: #ddd;
-  color: #333;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.cancel-btn:hover {
-  background: #ccc;
-}
-.menuBtn {
-  background: var(--accent1);
-  border: none;
-  border-radius: 10px;
-  padding: 6px 12px;
-  font-size: 18px;
-  color: white;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-.menuBtn:hover {
-  background: var(--accent2);
-  transform: scale(1.05);
-}
-
-  
+    .modal {
+      background: var(--card-bg);
+      padding: 26px;
+      border-radius: 14px;
+      max-width: 420px;
+      width: 92%;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+      text-align: left;
+      animation: popIn .2s ease;
+    }
+    .modal h2 { margin:0 0 6px; color:var(--accent2); font-size:20px; }
+    .modal p { margin:0 0 18px; color:#444; line-height:1.4; }
+    .modal .controls { display:flex; justify-content:flex-end; gap:10px; margin-top:6px; }
+    .btn-ghost { background:#eee; border:none; padding:10px 14px; border-radius:8px; cursor:pointer;}
+    .btn-danger { background: linear-gradient(to right,var(--accent1),var(--accent2)); color:white; border:none; padding:10px 14px; border-radius:8px; cursor:pointer; }
 
     /* ===== MAIN CONTENT ===== */
     .main {
@@ -166,44 +162,16 @@
       flex-wrap: wrap;
     }
 
-    .class-info {
-      display: flex;
-      flex-direction: column;
-    }
+    .class-info { display:flex; flex-direction:column; }
 
-    .class-title {
-      font-size: 24px;
-      font-weight: 700;
-    }
+    .class-title { font-size: 24px; font-weight:700; }
+    .class-subject { font-size:15px; opacity:.9; }
 
-    .class-subject {
-      font-size: 15px;
-      opacity: 0.9;
-    }
+    .month-nav { display:flex; align-items:center; justify-content:center; gap:15px; margin-bottom:20px; flex-wrap:wrap; }
 
-    .month-nav {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
+    .calendar { display:grid; grid-template-columns: repeat(7, 1fr); gap: 10px; width:100%; margin:0 auto; }
 
-    .calendar {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 10px;
-      width: 100%;
-      margin: 0 auto;
-    }
-
-    .day-name {
-      text-align: center;
-      font-weight: 600;
-      color: var(--accent2);
-      font-size: 14px;
-    }
+    .day-name { text-align:center; font-weight:600; color:var(--accent2); font-size:14px; }
 
     .day-box {
       background: var(--card-bg);
@@ -213,134 +181,88 @@
       position: relative;
       box-shadow: 0 2px 6px rgba(0,0,0,0.08);
       cursor: pointer;
-    }
+    } 
+     
+    .student-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.3s ease;
+  z-index: 9999;
+}
 
-    .day-number {
-      position: absolute;
-      top: 8px;
-      left: 10px;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--accent2);
-    }
+.student-modal.active {
+  visibility: visible;
+  opacity: 1;
+}
 
-    .task-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      position: absolute;
-      bottom: 8px;
-      right: 8px;
-      background: linear-gradient(to bottom right, var(--accent1), var(--accent2));
-    }
+.student-modal-content {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 25px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.student-modal-content h3 {
+  margin-bottom: 15px;
+  color: var(--accent2);
+}
+
+#studentList {
+  list-style: none;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+#studentList li {
+  background: var(--sidebar-bg);
+  margin: 5px 0;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+
+    .day-number { position:absolute; top:8px; left:10px; font-size:13px; font-weight:700; color:var(--accent2); }
+    .task-dot { width:10px; height:10px; border-radius:50%; position:absolute; bottom:8px; right:8px; background: linear-gradient(to bottom right, var(--accent1), var(--accent2)); }
 
     /* ===== TASK PANEL ===== */
-    .task-panel {
-      position: fixed;
-      top: 0;
-      right: 0;
-      height: 100vh;
-      width: 0;
-      background: var(--card-bg);
-      box-shadow: -4px 0 10px rgba(0,0,0,0.25);
-      overflow-y: auto;
-      padding: 0;
-      transition: width 0.4s;
-      display: flex;
-      flex-direction: column;
-      z-index: 1000;
-    }
+    .task-panel { position: fixed; top:0; right:0; height:100vh; width:0; background:var(--card-bg); box-shadow:-4px 0 10px rgba(0,0,0,0.25); overflow-y:auto; padding:0; transition: width .36s; display:flex; flex-direction:column; z-index:1000; }
+    .task-panel.open { width:420px; padding:25px; }
 
-    .task-panel.open {
-      width: 420px;
-      padding: 25px;
-    }
+    input, textarea { width:100%; padding:10px; border-radius:8px; border:2px solid var(--input-border); margin-top:8px; margin-bottom:15px; }
 
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: 2px solid var(--input-border);
-      margin-top: 8px;
-      margin-bottom: 15px;
-    }
+    .task-buttons { display:flex; justify-content:space-between; margin-top:auto; }
+    .save-btn { background:var(--accent1); color:#fff; border:none; padding:10px 16px; border-radius:8px; cursor:pointer; }
+    .cancel-btn { background:#ccc; border:none; padding:10px 16px; border-radius:8px; cursor:pointer; }
 
-    .task-buttons {
-      display: flex;
-      justify-content: space-between;
-      margin-top: auto;
-    }
-
-    .save-btn {
-      background: var(--accent1);
-      color: #fff;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .cancel-btn {
-      background: #ccc;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
+    /* small helpers */
+    @keyframes popIn { from { transform: translateY(-6px) scale(.98); opacity:0 } to { transform: translateY(0) scale(1); opacity:1 } }
+    @keyframes fadeIn { from { opacity:0 } to { opacity:1 } }
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 768px) {
-      body {
-        flex-direction: column;
-        height: auto;
-        overflow-y: auto;
-      }
-
+      body { flex-direction: column; height:auto; overflow-y:auto; }
       .sidebar {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 65px;
-        flex-direction: row;
-        justify-content: space-around;
-        padding: 0;
-        box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
-        z-index: 999;
+        position: fixed; bottom:0; left:0; width:100%; height:65px; flex-direction:row;
+        justify-content:space-around; padding:0; box-shadow:0 -2px 8px rgba(0,0,0,0.1); z-index:999;
       }
-
-      .sidebar img {
-        display: none;
-      }
-
-      .main {
-        padding: 20px;
-        margin-bottom: 70px;
-      }
-
-      .header {
-        padding: 15px;
-        text-align: center;
-      }
-
-      .calendar {
-        grid-template-columns: repeat(4, 1fr);
-      }
-
-      .task-panel.open {
-        width: 100%;
-        padding: 20px;
-      }
+      .sidebar img { display:none; }
+      .main { padding:20px; margin-bottom:70px; }
+      .header { padding:15px; text-align:center; }
+      .calendar { grid-template-columns: repeat(4, 1fr); }
+      .task-panel.open { width:100%; padding:20px; }
     }
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
 
-@keyframes popIn {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
   </style>
 </head>
 <body>
@@ -358,14 +280,23 @@
         <div class="class-subject" id="classSubject">Subject — Section</div>
         <div style="font-size:13px;opacity:.9" id="classCodeLabel"></div>
       </div>
-      <div class="menu">
-       <button id="menuBtn" class="menuBtn">
-  <i class="fa-solid fa-ellipsis-vertical"></i>
-</button>
 
-        <div id="dropdownMenu" style="display:none;background:#fff;border-radius:8px;box-shadow:0 4px 10px rgba(0,0,0,.15);position:absolute;right:0;top:40px;min-width:120px">
-          <a href="#" id="leaveClass" style="display:block;padding:12px;color:#333;text-decoration:none;font-weight:600">Leave</a>
-          <a href="#" id="deleteClass" style="display:block;padding:12px;color:#333;text-decoration:none;font-weight:600">Delete (Creator)</a>
+      <div class="menu">
+        <!-- professional menu button -->
+        <div class="menu-wrap" aria-haspopup="true" aria-expanded="false">
+          <button id="menuBtn" class="menuBtn" aria-label="Class menu">
+            <span class="dots">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </span>
+          </button>
+
+
+          <div id="dropdownMenu" role="menu" aria-hidden="true">
+            <a href="#" id="leaveClass" role="menuitem">Leave</a>
+            <a href="#" id="deleteClass" role="menuitem" style="display:none">Delete (Creator)</a>
+            <a class="menu-option" id="viewStudents">View Students</a>
+
+          </div>
         </div>
       </div>
     </div>
@@ -376,9 +307,10 @@
       <button id="next" style="padding:10px 14px;border-radius:8px;border:none;background:linear-gradient(to right,var(--accent1),var(--accent2));color:#fff;cursor:pointer">Next ▶</button>
     </div>
 
-    <div id="calendar-grid" class="calendar"></div>
+    <div id="calendar-grid" class="calendar" aria-live="polite"></div>
   </div>
 
+  <!-- task panel (right slide) -->
   <div id="taskPanel" class="task-panel" aria-hidden="true">
     <button id="closeTask" style="position:absolute;top:10px;right:15px;border:none;background:none;font-size:22px;cursor:pointer">×</button>
     <h3 id="selectedDate">Date</h3>
@@ -392,17 +324,18 @@
     </div>
     <div id="taskMeta" style="margin-top:12px;font-size:13px;color:#666"></div>
   </div>
-  
-  <div id="leaveModal" class="leave-modal">
-  <div class="leave-modal-content">
-    <h2>Leave this class?</h2>
-    <p>Are you sure you want to leave this class? You will lose access to its tasks and schedule.</p>
-    <div class="leave-buttons">
-      <button id="cancelLeave" class="cancel-btn">Cancel</button>
-      <button id="confirmLeave" class="leave-btn">Leave Class</button>
+
+  <!-- overlay + modal for leave & delete -->
+  <div id="overlay" class="overlay" aria-hidden="true">
+    <div id="modalBox" class="modal" role="dialog" aria-modal="true">
+      <h2 id="modalTitle">Confirm</h2>
+      <p id="modalText">Are you sure?</p>
+      <div class="controls">
+        <button id="modalCancel" class="btn-ghost">Cancel</button>
+        <button id="modalConfirm" class="btn-danger">Confirm</button>
+      </div>
     </div>
   </div>
-</div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -418,18 +351,23 @@
     const auth = getAuth(app);
 
     // DOM
-    const sidebar = document.getElementById("sidebar");
-    const main = document.getElementById("main");
     const calendarGrid = document.getElementById("calendar-grid");
     const monthYear = document.getElementById("month-year");
     const classTitleEl = document.getElementById("classTitle");
     const classSubjectEl = document.getElementById("classSubject");
     const classCodeLabel = document.getElementById("classCodeLabel");
+
     const menuBtn = document.getElementById("menuBtn");
     const dropdownMenu = document.getElementById("dropdownMenu");
-    const leaveModal = document.getElementById("leaveModal");
-    const cancelLeave = document.getElementById("cancelLeave");
-    const confirmLeave = document.getElementById("confirmLeave")
+    const leaveClassBtn = document.getElementById("leaveClass");
+    const deleteClassBtn = document.getElementById("deleteClass");
+
+    const overlay = document.getElementById("overlay");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalText = document.getElementById("modalText");
+    const modalCancel = document.getElementById("modalCancel");
+    const modalConfirm = document.getElementById("modalConfirm");
+
     const taskPanel = document.getElementById("taskPanel");
     const closeTask = document.getElementById("closeTask");
     const saveTaskBtn = document.getElementById("saveTask");
@@ -438,16 +376,13 @@
     const taskDescription = document.getElementById("taskDescription");
     const selectedDateEl = document.getElementById("selectedDate");
     const taskMeta = document.getElementById("taskMeta");
-    const leaveClassBtn = document.getElementById("leaveClass");
-    const deleteClassBtn = document.getElementById("deleteClass");
 
-
-    // State
+    // state
     const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
     let today = new Date();
     let currentMonth = today.getMonth();
     let currentYear = today.getFullYear();
-    let tasks = {}; // map dateKey -> { id, title, description, createdBy, createdAt }
+    let tasks = {};
     let currentUser = null;
     let classDoc = null;
     let classCode = null;
@@ -462,7 +397,6 @@
       window.location.href = "index.html";
     }
 
-    // helpers
     const ymd = (y,m,d) => `${y}-${m+1}-${d}`;
 
     function generateCalendar(month, year) {
@@ -495,6 +429,24 @@
       }
     }
 
+    // dropdown toggle
+    menuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isShown = dropdownMenu.classList.toggle("show");
+      menuBtn.setAttribute("aria-expanded", isShown ? "true" : "false");
+      dropdownMenu.setAttribute("aria-hidden", isShown ? "false" : "true");
+    });
+
+    // close when click outside
+    document.addEventListener("click", (e) => {
+      if (!dropdownMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+        dropdownMenu.classList.remove("show");
+        menuBtn.setAttribute("aria-expanded", "false");
+        dropdownMenu.setAttribute("aria-hidden", "true");
+      }
+    });
+
+    // open/close task panel
     function openTaskPanel(key, displayDate, data = null) {
       selectedDateKey = key;
       taskPanel.classList.add("open");
@@ -512,7 +464,6 @@
         delete saveTaskBtn.dataset.taskId;
       }
 
-      // if current user is creator of class -> allow editing
       const canEdit = currentUser && classDoc && (classDoc.createdBy === currentUser.uid);
       if (canEdit) {
         taskTitle.disabled = false; taskDescription.disabled = false; saveTaskBtn.style.display = "inline-block";
@@ -520,7 +471,6 @@
         taskTitle.disabled = true; taskDescription.disabled = true; saveTaskBtn.style.display = "none";
       }
     }
-
     function closeTaskPanel() {
       taskPanel.classList.remove("open");
       taskPanel.setAttribute("aria-hidden","true");
@@ -528,13 +478,15 @@
       delete saveTaskBtn.dataset.taskId;
     }
 
-    // Load class info and tasks
+    closeTask.addEventListener("click", closeTaskPanel);
+    cancelTaskBtn.addEventListener("click", closeTaskPanel);
+
+    // firestore & auth
     onAuthStateChanged(auth, async (user) => {
       if (!user) { window.location.href = "login.html"; return; }
       currentUser = user;
 
       try {
-        // fetch class doc from global classes/{classCode}
         const classRef = doc(db, "classes", classCode);
         const classSnap = await getDoc(classRef);
         if (!classSnap.exists()) {
@@ -547,14 +499,13 @@
         classSubjectEl.textContent = `${classDoc.subject || ""} — ${classDoc.section || ""}`;
         classCodeLabel.textContent = `Code: ${classDoc.code || classCode}`;
 
-        // show/hide Delete (creator) option
+        // only show delete for creator
         if (classDoc.createdBy === currentUser.uid) {
           deleteClassBtn.style.display = "block";
         } else {
           deleteClassBtn.style.display = "none";
         }
 
-        // realtime listener for class tasks
         if (unsubscribeTasks) unsubscribeTasks();
         unsubscribeTasks = onSnapshot(collection(db, "classes", classCode, "tasks"), (snap) => {
           tasks = {};
@@ -573,12 +524,10 @@
 
     // Save task (creator only)
     saveTaskBtn.addEventListener("click", async () => {
-      if (!currentUser) return;
-      if (!classDoc) return;
+      if (!currentUser || !classDoc) return;
       const title = taskTitle.value.trim();
       const desc = taskDescription.value.trim();
       if (!title) return alert("Enter a title.");
-
       saveTaskBtn.disabled = true;
       try {
         const taskId = saveTaskBtn.dataset.taskId;
@@ -601,79 +550,180 @@
       saveTaskBtn.disabled = false;
     });
 
-    cancelTaskBtn.addEventListener("click", closeTaskPanel);
-    closeTask.addEventListener("click", closeTaskPanel);
-
     // Prev/Next month
     document.getElementById("prev").addEventListener("click", () => { currentMonth--; if (currentMonth<0){ currentMonth=11; currentYear--; } generateCalendar(currentMonth,currentYear); });
     document.getElementById("next").addEventListener("click", () => { currentMonth++; if (currentMonth>11){ currentMonth=0; currentYear++; } generateCalendar(currentMonth,currentYear); });
 
-    // Menu toggle
-    menuBtn.addEventListener("click", () => { dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block"; });
+    // ---- Leave / Delete flows using the single modal overlay ----
+    function showModal({title, text, confirmText="Confirm", onConfirm}) {
+      modalTitle.textContent = title;
+      modalText.textContent = text;
+      modalConfirm.textContent = confirmText;
+      overlay.classList.add("show");
+      overlay.setAttribute("aria-hidden", "false");
 
-    // Leave class (removes this user's joinedClasses entries, and if creator also removes their users/{uid}/classes entry)
-    // Leave class with modal confirmation
-leaveClassBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  leaveModal.style.display = "flex";
-});
+      function cleanup() {
+        overlay.classList.remove("show");
+        overlay.setAttribute("aria-hidden", "true");
+        modalCancel.removeEventListener("click", onCancel);
+        modalConfirm.removeEventListener("click", onOk);
+        document.removeEventListener("keydown", onEsc);
+      }
+      function onCancel(e){ e?.preventDefault?.(); cleanup(); }
+      async function onOk(e){ e?.preventDefault?.(); cleanup(); await onConfirm(); }
+      function onEsc(e){ if (e.key === "Escape") onCancel(); }
 
-cancelLeave.addEventListener("click", () => {
-  leaveModal.style.display = "none";
-});
-
-confirmLeave.addEventListener("click", async () => {
-  leaveModal.style.display = "none";
-  try {
-    const joinedCol = collection(db, "users", currentUser.uid, "joinedClasses");
-    const q = query(joinedCol, where("code", "==", classCode));
-    const snaps = await getDocs(q);
-    for (const s of snaps.docs) {
-      await deleteDoc(doc(db, "users", currentUser.uid, "joinedClasses", s.id));
+      modalCancel.addEventListener("click", onCancel);
+      modalConfirm.addEventListener("click", onOk);
+      document.addEventListener("keydown", onEsc);
     }
 
-    const ownCol = collection(db, "users", currentUser.uid, "classes");
-    const q2 = query(ownCol, where("code", "==", classCode));
-    const snaps2 = await getDocs(q2);
-    for (const s of snaps2.docs) {
-      await deleteDoc(doc(db, "users", currentUser.uid, "classes", s.id));
-    }
+    // Leave class (remove joinedClasses and own classes entries)
+    leaveClassBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      dropdownMenu.classList.remove("show");
+      showModal({
+        title: "Leave this class?",
+        text: "If you leave this class you will lose access to its tasks and schedule. This action can be undone by joining again.",
+        confirmText: "Leave Class",
+        onConfirm: async () => {
+          try {
+            // remove from users/{uid}/joinedClasses (any docs with code)
+            const joinedCol = collection(db, "users", currentUser.uid, "joinedClasses");
+            const q = query(joinedCol, where("code", "==", classCode));
+            const snaps = await getDocs(q);
+            for (const s of snaps.docs) {
+              await deleteDoc(doc(db, "users", currentUser.uid, "joinedClasses", s.id));
+            }
 
-   // optional fade transition + inline confirmation
-console.log(" You have left the class.");
-const msg = document.createElement("div");
-msg.textContent = " You have left the class.";
-msg.style.position = "fixed";
-msg.style.top = "20px";
-msg.style.left = "50%";
-msg.style.transform = "translateX(-50%)";
-msg.style.background = "linear-gradient(to right, var(--accent1), var(--accent2))";
-msg.style.color = "white";
-msg.style.padding = "12px 20px";
-msg.style.borderRadius = "8px";
-msg.style.fontWeight = "600";
-msg.style.zIndex = "9999";
-msg.style.boxShadow = "0 4px 12px rgba(0,0,0,0.3)";
-document.body.appendChild(msg);
+            // also remove from users/{uid}/classes if teacher saved it
+            const ownCol = collection(db, "users", currentUser.uid, "classes");
+            const q2 = query(ownCol, where("code", "==", classCode));
+            const snaps2 = await getDocs(q2);
+            for (const s of snaps2.docs) {
+              await deleteDoc(doc(db, "users", currentUser.uid, "classes", s.id));
+            }
 
-setTimeout(() => {
-  msg.style.transition = "opacity 0.5s";
-  msg.style.opacity = "0";
-  setTimeout(() => {
-    msg.remove();
-    window.location.href = "index.html";
-  }, 500);
-}, 1500);
+            // show inline confirmation then redirect
+            const msg = document.createElement("div");
+            msg.textContent = "You have left the class.";
+            Object.assign(msg.style, {
+              position: "fixed", top: "18px", left:"50%", transform:"translateX(-50%)",
+              background:"linear-gradient(to right, var(--accent1), var(--accent2))", color:"#fff",
+              padding:"10px 16px", borderRadius:"10px", zIndex:9999, fontWeight:700, boxShadow:"0 6px 20px rgba(0,0,0,.25)"
+            });
+            document.body.appendChild(msg);
+            setTimeout(()=> { msg.style.transition="opacity .5s"; msg.style.opacity="0"; setTimeout(()=>{ msg.remove(); window.location.href="index.html"; },500); },1400);
 
-  } catch (err) {
-    console.error("Leave error:", err);
-    alert("Failed to leave. Try again.");
-  }
-});
+          } catch (err) {
+            console.error("Leave error:", err);
+            alert("Failed to leave. Try again.");
+          }
+        }
+      });
+    });
+
+    // Delete (creator) -- permanent removal of class doc and its tasks
+    deleteClassBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      dropdownMenu.classList.remove("show");
+      showModal({
+        title: "Delete class?",
+        text: "This will permanently delete the class and all its tasks for everyone. This cannot be undone.",
+        confirmText: "Delete Class",
+        onConfirm: async () => {
+          try {
+            // delete class tasks then class doc
+            const tasksColRef = collection(db, "classes", classCode, "tasks");
+            const snaps = await getDocs(tasksColRef);
+            for (const s of snaps.docs) {
+              await deleteDoc(doc(db, "classes", classCode, "tasks", s.id));
+            }
+            // delete class doc
+            await deleteDoc(doc(db, "classes", classCode));
+
+            // remove any references in users collections (best-effort)
+            // NOTE: this may be slow; if you have many users consider backend function.
+            // Attempt to remove from creator's own users/{uid}/classes as well:
+            try {
+              const ownCol = collection(db, "users", currentUser.uid, "classes");
+              const q2 = query(ownCol, where("code","==", classCode));
+              const snaps2 = await getDocs(q2);
+              for (const s of snaps2.docs) {
+                await deleteDoc(doc(db, "users", currentUser.uid, "classes", s.id));
+              }
+            } catch(e){ /* ignore */ }
+
+            const msg = document.createElement("div");
+            msg.textContent = "Class deleted.";
+            Object.assign(msg.style, {
+              position: "fixed", top: "18px", left:"50%", transform:"translateX(-50%)",
+              background:"#222", color:"#fff",
+              padding:"10px 16px", borderRadius:"10px", zIndex:9999, fontWeight:700
+            });
+            document.body.appendChild(msg);
+            setTimeout(()=> { msg.style.transition="opacity .5s"; msg.style.opacity="0"; setTimeout(()=>{ msg.remove(); window.location.href="index.html"; },500); },1200);
+
+          } catch (err) {
+            console.error("Delete error:", err);
+            alert("Failed to delete class. Try again.");
+          }
+        }
+      });
+    }); 
+    
+    // ===== View Students Modal =====  
+    const viewStudentsBtn = document.getElementById("viewStudents");
+      const studentModal = document.createElement("div");
+      studentModal.classList.add("student-modal");
+      studentModal.innerHTML = `
+        <div class="student-modal-content">
+          <h3>Student List</h3>
+          <ul id="studentList"></ul>
+          <button id="closeStudentModal">Close</button>
+        </div>
+      `;
+      document.body.appendChild(studentModal);
+
+      viewStudentsBtn?.addEventListener("click", async () => {
+        studentModal.classList.add("active");
+        dropdownMenu.classList.remove("show"); // para mawala yung dropdown kapag pinindot
+
+        const studentList = document.getElementById("studentList");
+        studentList.innerHTML = "<li>Loading...</li>";
+
+        try {
+          const classRef = doc(db, "classes", classCode);
+          const classSnap = await getDoc(classRef);
+
+          if (classSnap.exists()) {
+            const students = classSnap.data().students || [];
+            studentList.innerHTML = students.length
+              ? students.map(s => `<li>${s}</li>`).join("")
+              : "<li>No students yet.</li>";
+          }
+        } catch (e) {
+          console.error("Error fetching students:", e);
+          studentList.innerHTML = "<li>Failed to load students.</li>";
+        }
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!dropdownMenu.contains(e.target) && e.target !== menuBtn) {
+          dropdownMenu.classList.remove("show");
+        }
+      });
+
+      document.body.addEventListener("click", (e) => {
+        if (e.target.id === "studentModal" || e.target.id === "closeStudentModal") {
+          studentModal.classList.remove("active");
+        }
+      });
 
 
     // initial calendar render
     generateCalendar(currentMonth, currentYear);
+
   </script>
 </body>
 </html>
