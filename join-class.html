@@ -265,6 +265,15 @@ body {
           code: classData.code,
           joinedAt: new Date(),
         });
+          
+        // 🔹 Add student to the class's "students" subcollection
+        const studentRef = doc(db, "classes", classCode, "students", user.uid);
+        await setDoc(studentRef, {
+          name: user.displayName || "Unnamed Student",
+          email: user.email || "",
+          joinedAt: new Date(),
+        });
+
 
         alert(`✅ You have successfully joined "${classData.name}"!`);
 
