@@ -219,73 +219,63 @@ body {
   </div>
 
   <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-  import { getFirestore, collection, query, where, getDocs, addDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-  import { firebaseConfig } from "./firebase-config.js";
+ import {
+  getFirestore, doc, getDoc, setDoc, addDoc, collection
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { firebaseConfig } from "./firebase-config.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const auth = getAuth(app);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
 
-  const form = document.getElementById("joinForm");
+const joinClassBtn = document.getElementById("joinClassBtn");
 
-  onAuthStateChanged(auth, (user) => {
-    if (!user) {
-      window.location.href = "login.html";
+joinClassBtn?.addEventListener("click", async () => {
+  const classCode = document.getElementById("classCodeInput").value.trim();
+  const user = auth.currentUser;
+
+  if (!classCode) return alert("Please enter a class code.");
+  if (!user) return alert("You must be logged in.");
+
+  try {
+    // Check class existence
+    const classRef = doc(db, "classes", classCode);
+    const classSnap = await getDoc(classRef);
+
+    if (!classSnap.exists()) {
+      alert("❌ Class not found.");
       return;
     }
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+    const classData = classSnap.data();
 
-      const classCode = document.getElementById("classCode").value.trim();
-      if (!classCode) {
-        alert("Please enter a class code.");
-        return;
-      }
-
-      try {
-        // 🔍 Check if class exists in global collection
-        const classRef = doc(db, "classes", classCode);
-        const classSnap = await getDoc(classRef);
-
-        if (!classSnap.exists()) {
-          alert("❌ No class found with that code.");
-          return;
-        }
-
-        const classData = classSnap.data();
-
-        // 💾 Add to user's joinedClasses
-        await addDoc(collection(db, "users", user.uid, "joinedClasses"), {
-          name: classData.name,
-          subject: classData.subject,
-          section: classData.section,
-          code: classData.code,
-          joinedAt: new Date(),
-        });
-          
-        // 🔹 Add student to the class's "students" subcollection
-        const studentRef = doc(db, "classes", classCode, "students", user.uid);
-        await setDoc(studentRef, {
-          name: user.displayName || "Unnamed Student",
-          email: user.email || "",
-          joinedAt: new Date(),
-        });
-
-
-        alert(`✅ You have successfully joined "${classData.name}"!`);
-
-        // 🚀 Redirect directly to the class
-        window.location.href = `class-view.html?code=${classData.code}`;
-
-      } catch (error) {
-        console.error("Join failed:", error);
-        alert("⚠️ Something went wrong while joining. Please try again.");
-      }
+    // Add to user's joinedClasses
+    await addDoc(collection(db, "users", user.uid, "joinedClasses"), {
+      name: classData.name || "Unnamed Class",
+      subject: classData.subject || "",
+      section: classData.section || "",
+      code: classData.code || classCode,
+      joinedAt: new Date(),
     });
-  });
+
+    // Add student to class subcollection
+    const studentRef = doc(db, "classes", classCode, "students", user.uid);
+    await setDoc(studentRef, {
+      name: user.displayName || "Unnamed Student",
+      email: user.email || "",
+      joinedAt: new Date(),
+    });
+
+    alert(`✅ Successfully joined "${classData.name}"!`);
+    window.location.href = `class-view.html?code=${classCode}`;
+  } catch (err) {
+    console.error("Join error:", err);
+    alert("⚠️ Failed to join class. Check console for details.");
+  }
+});
+
 </script>
 
 </body>
