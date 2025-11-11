@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Join Class | iSkedMathay</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
   <script src="theme.js" defer></script>
+
   <style>
     :root {
       --main-bg: #f7f3ef;
@@ -20,17 +21,16 @@
     body {
       margin: 0;
       font-family: "Poppins", sans-serif;
-      background-color: var(--main-bg);
+      background: var(--main-bg);
       color: var(--text-color);
       display: flex;
       height: 100vh;
       overflow: hidden;
-      transition: background 0.4s, color 0.4s;
     }
 
     .sidebar {
       width: 100px;
-      background-color: var(--sidebar-bg);
+      background: var(--sidebar-bg);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -38,244 +38,196 @@
       box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
     }
 
-    .sidebar a {
-      text-decoration: none;
-      color: var(--accent2);
-      font-weight: 600;
-      margin: 20px 0;
-      text-align: center;
-      transition: color 0.3s, transform 0.3s;
-    }
-    
     .sidebar img {
       width: 65px;
       height: 65px;
       border-radius: 50%;
-      background-color: white;
+      background: #fff;
       padding: 5px;
       margin-bottom: 25px;
     }
 
+    .sidebar a {
+      color: var(--accent2);
+      text-decoration: none;
+      font-weight: 600;
+      margin: 18px 0;
+      text-align: center;
+    }
+
     .sidebar a:hover {
-      color: var(--accent1);
-      transform: scale(1.2);
+      transform: scale(1.1);
+      text-shadow: 0 0 8px var(--accent1), 0 0 15px var(--accent2);
     }
 
     .main {
       flex: 1;
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
-      text-align: center;
-      padding: 40px;
-    }
-
-    .title {
-      font-size: 28px;
-      font-weight: 700;
-      background: linear-gradient(to right, var(--accent1), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 25px;
+      align-items: center;
     }
 
     form {
-      background-color: var(--card-bg);
-      padding: 30px 40px;
+      background: var(--card-bg);
+      padding: 35px;
       border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-      width: 100%;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      width: 90%;
       max-width: 400px;
       display: flex;
       flex-direction: column;
       gap: 15px;
+      text-align: center;
     }
 
-    label {
-      font-weight: 600;
-      color: var(--text-color);
-      text-align: left;
+    h1 {
+      color: var(--accent2);
+      margin-bottom: 15px;
     }
 
     input {
       padding: 12px;
-      border: 2px solid #e0d6cf;
+      border: 2px solid #ddd;
       border-radius: 8px;
-      font-family: inherit;
-      outline: none;
-      transition: 0.2s;
+      font-size: 16px;
     }
 
     input:focus {
       border-color: var(--accent2);
-      box-shadow: 0 0 6px rgba(216, 44, 255, 0.4);
+      outline: none;
+      box-shadow: 0 0 5px rgba(216,44,255,0.3);
     }
 
     button {
-      background-color: var(--accent2);
+      background: linear-gradient(to right, var(--accent1), var(--accent2));
       color: white;
       border: none;
       padding: 12px;
-      border-radius: 10px;
+      border-radius: 8px;
+      font-size: 16px;
       font-weight: 600;
       cursor: pointer;
       transition: 0.3s;
     }
 
     button:hover {
-      background-color: var(--accent1);
       transform: scale(1.05);
     }
-
-    .back {
-      margin-top: 20px;
-      display: inline-block;
-      text-decoration: none;
-      color: var(--accent2);
-      font-weight: 600;
-    }
-
-    .back:hover {
-      color: var(--accent1);
-    }
-     .sidebar a:hover {
-       width: 60%;
-    }
-    .sidebar a:hover {
-  color: var(--hover-glow);
-  transform: scale(1.1);
-  text-shadow: 0 0 8px var(--accent1), 0 0 15px var(--accent2); 
-    }
-    /* ✅ Fullscreen Fix para sa mobile */
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: var(--main-bg);
-}
-
-/* Para sakto spacing ng main content */
-.main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ✅ Responsive adjustment para maayos tingnan sa cellphone */
-@media (max-width: 768px) {
-  body {
-    flex-direction: column;
-    height: auto;
-  }
-
-  .main {
-    flex: 1;
-    padding-bottom: 40px; /* para hindi dumikit sa baba */
-  }
-
-  .sidebar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 65px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background: var(--sidebar-bg);
-    box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
-  }
-
-  .main {
-    margin-bottom: 65px; /* para hindi matakpan ng sidebar */
-  }
-}
-
   </style>
 </head>
 <body>
   <div class="sidebar">
-    <img src="67eb2372-bf44-433b-bd1e-320f92ae8387.jpg" alt="Mathay Logo">
+    <img src="67eb2372-bf44-433b-bd1e-320f92ae8387.jpg" alt="Logo">
     <a href="index.html"><i class="fas fa-home"></i><br>Home</a>
     <a href="calendar.html"><i class="fas fa-calendar-alt"></i><br>Calendar</a>
     <a href="settings.html"><i class="fas fa-cog"></i><br>Settings</a>
   </div>
 
   <div class="main">
-    <div class="title">Join a Class</div>
     <form id="joinForm">
-      <label>Enter Class Code</label>
-      <input type="text" id="classCode" placeholder="e.g. CL1234" required>
+      <h1>Join a Class</h1>
+      <input type="text" id="classCodeInput" placeholder="Enter class code" required>
       <button type="submit">Join Class</button>
     </form>
-    <a href="index.html" class="back">← Back to Home</a>
   </div>
 
   <script type="module">
- import {
-  getFirestore, doc, getDoc, setDoc, addDoc, collection
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { firebaseConfig } from "./firebase-config.js";
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, doc, getDoc, setDoc, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { firebaseConfig } from "./firebase-config.js";
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
+  // ✅ Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
 
-const joinClassBtn = document.getElementById("joinClassBtn");
+  // Wait until DOM is ready
+  document.addEventListener("DOMContentLoaded", () => {
+    const joinForm = document.getElementById("joinForm");
+    const classCodeInput = document.getElementById("classCodeInput");
 
-joinClassBtn?.addEventListener("click", async () => {
-  const classCode = document.getElementById("classCodeInput").value.trim();
-  const user = auth.currentUser;
-
-  if (!classCode) return alert("Please enter a class code.");
-  if (!user) return alert("You must be logged in.");
-
-  try {
-    // Check class existence
-    const classRef = doc(db, "classes", classCode);
-    const classSnap = await getDoc(classRef);
-
-    if (!classSnap.exists()) {
-      alert("❌ Class not found.");
-      return;
-    }
-
-    const classData = classSnap.data();
-
-    // Add to user's joinedClasses
-    await addDoc(collection(db, "users", user.uid, "joinedClasses"), {
-      name: classData.name || "Unnamed Class",
-      subject: classData.subject || "",
-      section: classData.section || "",
-      code: classData.code || classCode,
-      joinedAt: new Date(),
+    // ✅ Check if user is logged in
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        alert("Please log in first.");
+        window.location.href = "login.html";
+      }
     });
 
-    // Add student to class subcollection
-    const studentRef = doc(db, "classes", classCode, "students", user.uid);
-    await setDoc(studentRef, {
-      name: user.displayName || "Unnamed Student",
-      email: user.email || "",
-      joinedAt: new Date(),
+    // ✅ Handle form submission (no refresh)
+    joinForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      e.stopPropagation(); // prevent page reload
+
+      const user = auth.currentUser;
+      const classCode = classCodeInput.value.trim();
+
+      if (!user) {
+        alert("You must be logged in.");
+        return;
+      }
+
+      if (!classCode) {
+        alert("Please enter a class code.");
+        return;
+      }
+
+      console.log("Joining class:", classCode);
+
+      try {
+        // ✅ Check if class exists
+        const classRef = doc(db, "classes", classCode);
+        const classSnap = await getDoc(classRef);
+
+        if (!classSnap.exists()) {
+          alert("❌ Class not found.");
+          return;
+        }
+
+        const classData = classSnap.data();
+        console.log("✅ Class found:", classData);
+
+        // ✅ Add to user's joinedClasses
+        await addDoc(collection(db, "users", user.uid, "joinedClasses"), {
+          name: classData.name || "Unnamed Class",
+          subject: classData.subject || "",
+          section: classData.section || "",
+          code: classCode,
+          joinedAt: new Date(),
+        });
+
+        // ✅ Add to class’s students subcollection
+        let studentName = user.displayName || "";
+
+        try {
+          const userDocRef = doc(db, "users", user.uid);
+          const userDocSnap = await getDoc(userDocRef);
+          if (userDocSnap.exists() && userDocSnap.data().name) {
+            studentName = userDocSnap.data().name;
+          }
+        } catch (err) {
+          console.warn("⚠️ Could not fetch user's name:", err);
+        }
+
+        const studentRef = doc(db, "classes", classCode, "students", user.uid);
+        await setDoc(studentRef, {
+          name: studentName || "Unnamed Student",
+          email: user.email || "",
+          joinedAt: new Date(),
+        });
+
+        console.log("✅ Successfully joined:", classCode);
+        alert(`✅ Successfully joined "${classData.name}"!`);
+
+        // ✅ Redirect after success
+        window.location.href = `class-view.html?code=${classCode}`;
+      } catch (err) {
+        console.error("🔥 Join error:", err);
+        alert("⚠️ Failed to join class: " + err.message);
+      }
     });
-
-    alert(`✅ Successfully joined "${classData.name}"!`);
-    window.location.href = `class-view.html?code=${classCode}`;
-  } catch (err) {
-    console.error("Join error:", err);
-    alert("⚠️ Failed to join class. Check console for details.");
-  }
-});
-
+  });
 </script>
 
 </body>
