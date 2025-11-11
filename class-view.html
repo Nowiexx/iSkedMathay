@@ -75,7 +75,7 @@
       cursor: pointer;
       transition: 0.3s;
         }
-    .menuBtn:hover { ttransform: scale(1.1);
+    .menuBtn:hover { transform: scale(1.1);
   box-shadow: 0 0 10px var(--accent2);}
     .menuBtn .dot { width:6px;height:6px;background:var(--accent2);border-radius:50%;display:block;box-shadow:0 0 0 2px rgba(216,44,255,0.08); }
     .menuBtn .dot + .dot { margin-left:6px; }
@@ -672,53 +672,54 @@
       });
     }); 
     
-    // ===== View Students Modal =====  
-    const viewStudentsBtn = document.getElementById("viewStudents");
-      const studentModal = document.createElement("div");
-      studentModal.classList.add("student-modal");
-      studentModal.innerHTML = `
-        <div class="student-modal-content">
-          <h3>Student List</h3>
-          <ul id="studentList"></ul>
-          <button id="closeStudentModal">Close</button>
-        </div>
-      `;
-      document.body.appendChild(studentModal);
+   // ===== View Students Modal =====  
+const viewStudentsBtn = document.getElementById("viewStudents");
+const studentModal = document.createElement("div");
+studentModal.classList.add("student-modal");
+studentModal.innerHTML = `
+  <div class="student-modal-content">
+    <h3>Student List</h3>
+    <ul id="studentList"></ul>
+    <button id="closeStudentModal">Close</button>
+  </div>
+`;
+document.body.appendChild(studentModal);
 
-      viewStudentsBtn?.addEventListener("click", async () => {
-        studentModal.classList.add("active");
-        dropdownMenu.classList.remove("show"); // para mawala yung dropdown kapag pinindot
+viewStudentsBtn?.addEventListener("click", async () => {
+  studentModal.classList.add("active");
+  dropdownMenu.classList.remove("show");
+  const studentList = document.getElementById("studentList");
+  studentList.innerHTML = "<li>Loading...</li>";
 
-        const studentList = document.getElementById("studentList");
-        studentList.innerHTML = "<li>Loading...</li>";
+  try {
+    // get students subcollection
+    const studentsRef = collection(db, "classes", classCode, "students");
+    const snap = await getDocs(studentsRef);
 
-        try {
-          const classRef = doc(db, "classes", classCode);
-          const classSnap = await getDoc(classRef);
+    if (snap.empty) {
+      studentList.innerHTML = "<li>No students yet.</li>";
+      return;
+    }
 
-          if (classSnap.exists()) {
-            const students = classSnap.data().students || [];
-            studentList.innerHTML = students.length
-              ? students.map(s => `<li>${s}</li>`).join("")
-              : "<li>No students yet.</li>";
-          }
-        } catch (e) {
-          console.error("Error fetching students:", e);
-          studentList.innerHTML = "<li>Failed to load students.</li>";
-        }
-      });
+    const items = [];
+    snap.forEach(doc => {
+      const d = doc.data();
+      items.push(`<li>${d.name || d.email || doc.id}</li>`);
+    });
 
-      document.addEventListener("click", (e) => {
-        if (!dropdownMenu.contains(e.target) && e.target !== menuBtn) {
-          dropdownMenu.classList.remove("show");
-        }
-      });
+    studentList.innerHTML = items.join("");
+  } catch (e) {
+    console.error("Error fetching students:", e);
+    studentList.innerHTML = "<li>Failed to load students.</li>";
+  }
+});
 
-      document.body.addEventListener("click", (e) => {
-        if (e.target.id === "studentModal" || e.target.id === "closeStudentModal") {
-          studentModal.classList.remove("active");
-        }
-      });
+document.getElementById("closeStudentModal").addEventListener("click", () => {
+  studentModal.classList.remove("active");
+});
+studentModal.addEventListener("click", (e) => {
+  if (e.target === studentModal) studentModal.classList.remove("active");
+});
 
 
     // initial calendar render
