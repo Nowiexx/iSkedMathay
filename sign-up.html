@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Create Account | iSkedMathay</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <style>
     body {
       font-family: "Poppins", sans-serif;
@@ -81,31 +83,82 @@
   </div>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import { firebaseConfig } from "./firebase-config.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { firebaseConfig } from "./firebase-config.js";
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+  // ✅ Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
-    document.getElementById("signupBtn").addEventListener("click", async () => {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
+  document.getElementById("signupBtn").addEventListener("click", async () => {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-      if (!email || !password) {
-        alert("Please fill out both fields.");
-        return;
-      }
+    if (!email || !password) {
+      Swal.fire({
+        icon: "warning",
+        title: "Missing fields",
+        text: "Please fill out both email and password.",
+        confirmButtonColor: "#ff5f6d",
+        backdrop: "rgba(0,0,0,0.3) blur(8px)"
+      });
+      return;
+    }
 
-      try {
-        await createUserWithEmailAndPassword(auth, email, password);
-        alert("✅ Account created successfully!");
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+
+      // 🎨 Accent colors from CSS variables (optional)
+      const accent1 = getComputedStyle(document.documentElement)
+        .getPropertyValue("--accent1")
+        ?.trim() || "#ff5f6d";
+      const accent2 = getComputedStyle(document.documentElement)
+        .getPropertyValue("--accent2")
+        ?.trim() || "#d82cff";
+
+      //  SweetAlert success popup
+      Swal.fire({
+        iconHtml: `
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="70" height="70">
+            <path d="M14 27l8 8 16-16" fill="none" stroke="${accent1}" stroke-width="4"
+              stroke-linecap="round" stroke-linejoin="round"
+              style="stroke-dasharray:48;stroke-dashoffset:48;animation:draw 0.6s ease forwards"/>
+            <style>@keyframes draw{to{stroke-dashoffset:0}}</style>
+          </svg>
+        `,
+        title: "Account Created!",
+        html: `
+          <p style="font-size:15px; color:#333; margin-top:10px;">
+            Your account has been created successfully. <br>
+            Welcome to <b>iSkedMathay</b>!
+          </p>
+        `,
+        background: "#ffffff",
+        color: "#222",
+        width: "380px",
+        backdrop: "rgba(0,0,0,0.35) blur(10px)",
+        showConfirmButton: true,
+        confirmButtonText: "Continue",
+        confirmButtonColor: accent1,
+        allowOutsideClick: false,
+        customClass: { popup: "rounded-2xl shadow-lg" },
+      }).then(() => {
         window.location.href = "login.html";
-      } catch (error) {
-        console.error(error.code, error.message);
-        alert("❌ " + error.message);
-      }
-    });
-  </script>
+      });
+
+    } catch (error) {
+      console.error(error.code, error.message);
+      Swal.fire({
+        icon: "error",
+        title: "Signup Failed",
+        text: error.message,
+        confirmButtonColor: "#ff5f6d",
+        backdrop: "rgba(0,0,0,0.3) blur(8px)"
+      });
+    }
+  });
+</script>
+
 </body>
 </html>
