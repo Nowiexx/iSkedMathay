@@ -288,7 +288,21 @@
     font-size: 14px;
     padding: 8px 14px;
   }
+    }
+    .has-task {
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  color: white;
+  font-weight: 600;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: 0.3s ease;
 }
+
+.has-task:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
 
   </style>
 </head>
@@ -444,8 +458,9 @@
         const num = document.createElement("div"); num.className="day-number"; num.textContent = date; box.appendChild(num);
 
         if (tasks[key]) {
-          const dot = document.createElement("div"); dot.className="task-dot"; box.appendChild(dot);
-        }
+  box.classList.add("has-task");
+}
+
 
         box.addEventListener("click", () => {
           const data = tasks[key] || null;
